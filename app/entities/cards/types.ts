@@ -1,17 +1,21 @@
-import { type IUser, UserDto } from '~/entities/users';
-
-export interface ICard<T = string> {
-  id: '',
-  created_at: '',
-  name: '',
-  author_id: T;
+export interface ICard {
+  id: string;
+  uid: string;
+  created_at: string;
+  name: string;
+  tags: string[];
+  description: string;
+  price: number;
+  service_fee: number;
 }
 
-export type TFullCard = ICard<IUser>;
-
-export const CardDto: TFullCard = {
+export const CardDto: ICard = {
   id: '',
+  uid: '',
+  description: '',
+  price: 0,
+  service_fee: 0,
+  tags: '' as unknown as string[],
   name: '',
   created_at: '',
-  author_id: UserDto
-}
+};

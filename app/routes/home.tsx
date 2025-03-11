@@ -3,54 +3,42 @@ import type { Route } from './+types/home';
 import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-import { CardDto, type TFullCard } from '~/entities/cards';
+import { type ICard } from '~/entities/cards';
+import { supabase } from '~/shared/utils';
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: 'Maxy Bank' }, { name: 'description', content: 'Добро пожаловать в Maxy Bank' }];
 }
 
-const supabaseUrl = import.meta.env.VITE_SBURL;
-const supabaseKey = import.meta.env.VITE_SBKEY;
-
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-const createUrl = (dto: {}): string => {
-  let res = '';
-
-  for (const k in dto) {
-    if (Object.prototype.hasOwnProperty.call(dto, k)) {
-      const key = k as keyof typeof dto;
-      if (typeof dto[key] === 'object') {
-        res += key + '(' + Object.keys(dto[key]).join(',') + ')';
-        continue;
-      }
-      res += key + ', ';
-    }
-  }
-
-  return res;
-};
-
 export default function Home() {
-  const [cards, setCards] = useState<TFullCard[]>([]);
+  const [cards, setCards] = useState<ICard[]>([]);
 
   useEffect(() => {
-    getInstruments();
+    getCardList();
   }, []);
 
-  async function getInstruments() {
-    let { data: cards, error } = await supabase.from('cards').select(createUrl(CardDto));
+  async function getCardList() {
+    let { data: cards, error } = await supabase.from('cards').select('*');
 
     console.log(cards);
 
-    setCards(cards as unknown as TFullCard[]);
+    setCards(cards as unknown as ICard[]);
   }
 
   return (
-    <ul>
-      {cards.map((instrument) => (
-        <li key={instrument.name}>{instrument.name}</li>
-      ))}
-    </ul>
+    <div className="container">
+      <h3>Карты нашего банка</h3>
+      <ul>
+        {cards.map((card) => (
+          <li key={card.name}>
+            <h5>{card.name}</h5>
+            <p>{card.description}</p>
+            <p>
+              Начни пользоваться за {card.price} р. (обслуживание - {card.service_fee})
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
