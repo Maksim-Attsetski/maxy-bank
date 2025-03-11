@@ -1,7 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-grey: #f4f4f4;
+  --color-primary: #3772FF;
+  --color-text: #f7f7f7;
 }
 
+.layout {
+  @apply flex flex-col justify-between bg-grey min-h-screen;
+}
+
+footer {
+  margin-top: auto;
+}
+
+.container {
+  width: clamp(300px, 94vw, 1200px);
+  margin: 0 auto;
+}
+
+button {
+  cursor: pointer;
+}
