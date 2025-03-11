@@ -1,0 +1,14 @@
+{
+  "extends": ["stylelint-config-standard-scss", "stylelint-config-tailwindcss/scss"],
+  "rules": {
+    "block-no-empty": true,
+    "selector-class-pattern": null,
+    "custom-property-pattern": null,
+    "rule-empty-line-before": [
+      "always", {
+        "except": ["first-nested", "after-single-line-comment"]
+      }
+    ],
+    "no-descending-specificity": null
+  }
+}
