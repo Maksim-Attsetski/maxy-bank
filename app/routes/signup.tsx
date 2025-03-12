@@ -1,6 +1,6 @@
-import { Button } from '~/shared';
+import { Button, Input } from '~/shared';
 import type { Route } from './+types/home';
-import { Link } from 'react-router';
+import { Formik } from 'formik';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -11,23 +11,10 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Signup() {
   return (
-    <>
+    <div className="container">
       <h2>Регистрация</h2>
       <br />
       <Button to={'/'}>Назад</Button>
-      <br />
-      <div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis nostrum culpa
-          assumenda suscipit velit deleniti aliquam veniam cupiditate ratione ex.
-        </p>
-        <br />
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid atque vero corporis
-          laborum repellat, quaerat odit quis doloribus tenetur magni reiciendis sequi molestiae
-          delectus aut? Consectetur architecto mollitia nihil minus.
-        </p>
-      </div>
-    </>
+    </div>
   );
 }

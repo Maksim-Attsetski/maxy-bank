@@ -27,6 +27,7 @@
     "@react-router/serve": "^7.3.0",
     "@supabase/supabase-js": "^2.49.1",
     "dotenv": "^16.4.7",
+    "formik": "^2.4.6",
     "framer-motion": "^12.5.0",
     "isbot": "^5.1.17",
     "react": "^19.0.0",
