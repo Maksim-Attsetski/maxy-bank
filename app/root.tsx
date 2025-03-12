@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   isRouteErrorResponse,
   Links,
@@ -8,7 +9,7 @@ import {
 } from 'react-router';
 
 import type { Route } from './+types/root';
-import { Footer, Header } from '~/shared';
+import { supabase } from './shared/utils';
 
 import './app.css';
 
@@ -44,6 +45,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log('by onAuthStateChange', _event, session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return <Outlet />;
 }
 
@@ -56,7 +67,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     message = error.status === 404 ? '404' : 'Error';
     details =
       error.status === 404 ? 'The requested page could not be found.' : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
+  } else if ((import.meta as any).env.DEV && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;
   }
