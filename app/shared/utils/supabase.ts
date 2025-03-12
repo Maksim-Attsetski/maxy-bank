@@ -1,6 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SBURL;
-const supabaseKey = import.meta.env.VITE_SBKEY;
+let supabaseUrl: string = '';
+let supabaseAnonKey: string = '';
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+if (typeof window !== 'undefined') {
+  // Это гарантирует, что код будет выполняться только на клиенте
+  supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+}
+
+let supabase;
+
+if (supabaseUrl && supabaseAnonKey) {
+  supabase = createClient(supabaseUrl, supabaseAnonKey);
+}
+export { supabase };

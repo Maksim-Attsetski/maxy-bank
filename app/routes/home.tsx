@@ -1,7 +1,6 @@
 import type { Route } from './+types/home';
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 
 import { type ICard } from '~/entities/cards';
 import { supabase } from '~/shared/utils';

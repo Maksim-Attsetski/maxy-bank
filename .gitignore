@@ -6,3 +6,7 @@
 /build/
 
 .env
+.env.d.ts
+.env.development
+
+yarn-error.log
