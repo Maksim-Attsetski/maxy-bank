@@ -10,6 +10,8 @@ import {
 
 import type { Route } from './+types/root';
 import { supabase } from './shared/utils';
+import { useAuth } from './entities/auth';
+import App from './App';
 
 import './app.css';
 
@@ -44,20 +46,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      console.log('by onAuthStateChange', _event, session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  return <Outlet />;
-}
-
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = 'Oops!';
   let details = 'An unexpected error occurred.';
@@ -84,3 +72,5 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     </main>
   );
 }
+
+export default App;
