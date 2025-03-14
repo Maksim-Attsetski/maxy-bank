@@ -1,7 +1,7 @@
-import { Button, Input } from '~/shared';
+import { Button, Input } from 'app/shared';
 import type { Route } from './+types/home';
 import { Formik } from 'formik';
-import { supabase } from '~/shared/utils';
+import { supabase } from 'app/shared/utils';
 
 export function meta({}: Route.MetaArgs) {
   return [

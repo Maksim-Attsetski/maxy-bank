@@ -1,4 +1,4 @@
-import { useDataBase } from '~/shared';
+import { useDataBase } from 'app/shared';
 import { useUsersStore } from '../slice';
 import type { IUser } from '../types';
 

@@ -1,16 +1,6 @@
-import { useEffect } from 'react';
-import {
-  isRouteErrorResponse,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from 'react-router';
+import { isRouteErrorResponse, Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 
 import type { Route } from './+types/root';
-import { supabase } from './shared/utils';
-import { useAuth } from './entities/auth';
 import App from './App';
 
 import './app.css';

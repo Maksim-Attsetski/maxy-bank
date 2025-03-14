@@ -1,9 +1,11 @@
 import React, { type FC } from 'react';
-import { Button } from '../ui';
 import { Link } from 'react-router';
+
 import { authRoutes, routes } from '../const';
-import { useAuth } from '~/entities/auth';
-import { useUsers } from '~/entities/users';
+import { Button } from '../ui';
+
+import { useAuth } from 'app/entities/auth';
+import { useUsers } from 'app/entities/users';
 
 const Header: FC = () => {
   const { isAuth, onLogout } = useAuth();

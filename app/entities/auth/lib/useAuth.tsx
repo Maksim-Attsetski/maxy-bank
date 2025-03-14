@@ -4,8 +4,8 @@ import type {
   User,
 } from '@supabase/supabase-js';
 import { useAuthStore } from '../slice';
-import { supabase } from '~/shared/utils';
-import { useUsers, type IUser } from '~/entities/users';
+import { supabase } from 'app/shared/utils';
+import { useUsers, type IUser } from 'app/entities/users';
 
 export const useAuth = () => {
   const { isAuth, setIsAuth } = useAuthStore();

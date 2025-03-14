@@ -2,8 +2,8 @@ import type { Route } from './+types/home';
 
 import { useEffect, useState } from 'react';
 
-import { type ICard } from '~/entities/cards';
-import { supabase } from '~/shared/utils';
+import { type ICard } from 'app/entities/cards';
+import { supabase } from 'app/shared/utils';
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: 'Maxy Bank' }, { name: 'description', content: 'Добро пожаловать в Maxy Bank' }];
