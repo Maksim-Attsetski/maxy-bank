@@ -1,6 +1,5 @@
 export interface IUser {
   id: string;
-  name: string;
   created_at: string;
   first_name: string;
   last_name: string;
@@ -16,7 +15,6 @@ export type TUserType = 'USER' | 'COMPANY';
 
 export const UserDto: IUser = {
   id: '',
-  name: '',
   gender: 'MALE',
   type: 'USER',
   first_name: '',

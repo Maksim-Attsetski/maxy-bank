@@ -1,4 +1,6 @@
+import { Button, routes } from 'app/shared';
 import type { Route } from '../+types/home';
+import { useUsers } from 'app/entities/users';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -8,22 +10,12 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function PrivateCabinet() {
+  const { user } = useUsers();
   return (
-    <>
-      <h2>Поддержка сайта Maxy Bank</h2>
+    <div className="container">
+      <Button to={-1}>Назад</Button>
       <br />
-      <div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis nostrum culpa
-          assumenda suscipit velit deleniti aliquam veniam cupiditate ratione ex.
-        </p>
-        <br />
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid atque vero corporis
-          laborum repellat, quaerat odit quis doloribus tenetur magni reiciendis sequi molestiae
-          delectus aut? Consectetur architecto mollitia nihil minus.
-        </p>
-      </div>
-    </>
+      <Button to={`/${routes.profile}/${user?.id}`}>Перейти в личный кабинет</Button>
+    </div>
   );
 }

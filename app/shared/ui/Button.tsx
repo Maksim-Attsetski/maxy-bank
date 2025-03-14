@@ -12,10 +12,11 @@ import { motion, type HTMLMotionProps } from 'framer-motion';
 
 interface IProps extends Omit<HTMLMotionProps<'button'>, 'ref'> {
   variant?: 'primary' | 'secondary';
-  to?: string;
+  to?: string | number;
 }
 
-const commonCls = 'rounded-xl border-[1px] border-solid py-1 px-5 font-medium shadow-lg';
+const commonCls =
+  'rounded-xl border-[1px] border-solid py-1 px-5 font-medium shadow-lg w-max transition-all hover:bg-primary hover:text-text';
 const primaryCls = 'border-transparent bg-primary text-text';
 const secondaryCls = 'border-primary';
 
@@ -30,7 +31,7 @@ const Button: FC<IProps> = ({ variant, to, ...btnProps }) => {
 
   const onButtonClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     btnProps?.onClick?.(event);
-    to && navigate(to);
+    to && navigate(to as string);
   };
 
   return (

@@ -28,7 +28,7 @@ const Header: FC = () => {
           <div className="flex gap-2 items-center">
             <div className="flex gap-3 items-center">
               <p className="font-medium text-lg">{user?.first_name}</p>
-              <Button to={routes.profile} className="py-2 px-2 rounded-full">
+              <Button variant="primary" to={routes.profile} className="py-2 px-2 rounded-full">
                 <FaRegUser />
               </Button>
             </div>
