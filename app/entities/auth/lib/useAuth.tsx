@@ -1,12 +1,47 @@
-import type { User } from '@supabase/supabase-js';
+import type {
+  SignInWithPasswordCredentials,
+  SignUpWithPasswordCredentials,
+  User,
+} from '@supabase/supabase-js';
 import { useAuthStore } from '../slice';
 import { supabase } from '~/shared/utils';
+import { useUsers, type IUser } from '~/entities/users';
 
 export const useAuth = () => {
-  const { isAuth, updateUser, user } = useAuthStore();
+  const { isAuth, setIsAuth } = useAuthStore();
+  const { onGetUser, onCreateUser, user } = useUsers();
 
-  const onAuth = (data: User | null) => {
-    updateUser(data);
+  const onAuth = async (data: User | null) => {
+    setIsAuth(!!data);
+
+    if (data && !user) {
+      await onGetUser(data?.id);
+    }
+  };
+
+  const onLogin = async (credentials: SignInWithPasswordCredentials) => {
+    try {
+      const response = await supabase.auth.signInWithPassword(credentials);
+
+      if (response.error) throw new Error(response?.error?.message);
+
+      onAuth(response.data.user);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onSignup = async (values: Partial<IUser>, credentials: SignUpWithPasswordCredentials) => {
+    try {
+      const response = await supabase.auth.signUp(credentials);
+
+      if (response.error) throw new Error(response?.error?.message);
+
+      await onCreateUser({ ...values } as IUser);
+      setIsAuth(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onLogout = async () => {
@@ -20,5 +55,5 @@ export const useAuth = () => {
     }
   };
 
-  return { isAuth, user, onAuth, onLogout };
+  return { isAuth, onAuth, onLogin, onSignup, onLogout };
 };

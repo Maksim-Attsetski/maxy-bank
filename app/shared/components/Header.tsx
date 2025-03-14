@@ -3,9 +3,11 @@ import { Button } from '../ui';
 import { Link } from 'react-router';
 import { authRoutes, routes } from '../const';
 import { useAuth } from '~/entities/auth';
+import { useUsers } from '~/entities/users';
 
 const Header: FC = () => {
   const { isAuth, onLogout } = useAuth();
+  const { user } = useUsers();
 
   return (
     <header className="container py-3">
@@ -19,8 +21,11 @@ const Header: FC = () => {
           <Link to={routes.currency_exchange}>Курсы валют</Link>
         </div>
         {isAuth ? (
-          <div className="flex gap-2">
-            <div></div>
+          <div className="flex gap-2 items-center">
+            <div className="flex gap-2">
+              <p>{user?.first_name}</p>
+              <p>{user?.last_name}</p>
+            </div>
             <Button onClick={onLogout} to="/">
               Выйти
             </Button>

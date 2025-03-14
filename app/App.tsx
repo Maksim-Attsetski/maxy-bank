@@ -5,7 +5,7 @@ import { useAuth } from './entities/auth';
 import { supabase } from './shared/utils';
 
 const App: FC = () => {
-  const { onAuth, isAuth } = useAuth();
+  const { onAuth } = useAuth();
 
   useEffect(() => {
     const {

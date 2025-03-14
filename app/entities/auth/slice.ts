@@ -3,17 +3,12 @@ import { create } from 'zustand';
 
 interface IState {
   isAuth: boolean;
-  user: User | null;
 
-  updateUser: (data: Partial<User> | null) => void;
+  setIsAuth: (data?: boolean) => void;
 }
 
 export const useAuthStore = create<IState>((set) => ({
-  user: null,
   isAuth: false,
 
-  updateUser: (newUser) =>
-    set((state) => {
-      return { user: newUser ? ({ ...state?.user, ...newUser } as User) : null, isAuth: !!newUser };
-    }),
+  setIsAuth: (value) => set((state) => ({ isAuth: value ?? !state.isAuth })),
 }));
