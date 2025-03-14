@@ -3,7 +3,7 @@ import type { Route } from '../+types/home';
 import { useUserDocuments, useUsers } from 'app/entities/users';
 import { useEffect, useMemo, useState } from 'react';
 import { Formik } from 'formik';
-import { Button, decode, encode, Input, supabase } from 'app/shared';
+import { Button, Card, decode, encode, Input, supabase } from 'app/shared';
 import { ProfileUserInfo } from 'app/widgets';
 
 export function meta({}: Route.MetaArgs) {
@@ -81,26 +81,27 @@ export default function Profile() {
 
   return (
     <div className="container">
+      <br />
       <ProfileUserInfo />
-      <br />
-      <hr />
-      <br />
+      <div className="py-3" />
       {isAuthor &&
         (userDocument ? (
           <div>
-            <p>№ {userDocument.identification_number}</p>
-            <p>Номер {userDocument.passport_number}</p>
-            <p>С {userDocument.issued_at}</p>
-            <p>До {userDocument.expire_at}</p>
-            <p>Выдан: {userDocument.issued_by}</p>
-            <p>Адрес</p>
-            <hr />
-            <div>
+            <Card withScale={false}>
+              <p>№ {userDocument.identification_number}</p>
+              <p>Номер {userDocument.passport_number}</p>
+              <p>С {userDocument.issued_at}</p>
+              <p>До {userDocument.expire_at}</p>
+              <p>Выдан: {userDocument.issued_by}</p>
+            </Card>
+            <div className="py-3" />
+            <Card withScale={false}>
+              <p>Адрес</p>
               {Object.values(userDocument.address_live).map((item, inx) => (
                 <p key={inx}>{item}</p>
               ))}
-            </div>
-            <hr />
+            </Card>
+            <br />
           </div>
         ) : (
           <Formik
