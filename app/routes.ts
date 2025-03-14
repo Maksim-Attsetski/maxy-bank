@@ -1,4 +1,4 @@
-import { type RouteConfig, index, layout, route } from '@react-router/dev/routes';
+import { type RouteConfig, index, layout, prefix, route } from '@react-router/dev/routes';
 import { authRoutes, routes } from './shared';
 
 export default [
@@ -11,5 +11,10 @@ export default [
     route(routes.cards, 'routes/cards.tsx'),
     route(routes.currency_exchange, 'routes/currency_exchange.tsx'),
     route(routes.deposits, 'routes/deposits.tsx'),
+
+    ...prefix('profile', [
+      index('routes/profile/private_cabinet.tsx'),
+      route(':uid', 'routes/profile/profile.tsx'),
+    ]),
   ]),
 ] satisfies RouteConfig;

@@ -6,6 +6,11 @@
   --color-text: #f7f7f7;
 }
 
+body {
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .layout {
   @apply flex flex-col justify-between bg-grey min-h-screen;
 }

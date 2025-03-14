@@ -11,6 +11,7 @@ export const colors = {
 
 export const routes = {
   home: 'home',
+  profile: 'profile',
   about: 'about',
   support: 'support',
   cards: 'cards',

@@ -1,6 +1,8 @@
 import React, { type FC } from 'react';
 import { Link } from 'react-router';
 
+import { FaRegUser } from 'react-icons/fa';
+
 import { authRoutes, routes } from '../const';
 import { Button } from '../ui';
 
@@ -24,9 +26,11 @@ const Header: FC = () => {
         </div>
         {isAuth ? (
           <div className="flex gap-2 items-center">
-            <div className="flex gap-2">
-              <p>{user?.first_name}</p>
-              <p>{user?.last_name}</p>
+            <div className="flex gap-3 items-center">
+              <p className="font-medium text-lg">{user?.first_name}</p>
+              <Button to={routes.profile} className="py-2 px-2 rounded-full">
+                <FaRegUser />
+              </Button>
             </div>
             <Button onClick={onLogout} to="/">
               Выйти
