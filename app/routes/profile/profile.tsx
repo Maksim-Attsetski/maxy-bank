@@ -15,7 +15,7 @@ export default function Profile() {
 
   const { user } = useUsers();
 
-  const isAuthor = useMemo(() => user?.id === paramsId, [user?.id, paramsId]);
+  const isAuthor = useMemo(() => user?.uid === paramsId, [user?.uid, paramsId]);
 
   return (
     <div className="container">

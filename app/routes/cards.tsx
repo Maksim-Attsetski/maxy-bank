@@ -1,3 +1,6 @@
+import type { ICard } from 'app/entities/cards';
+import { supabase } from 'app/shared';
+import { useState, useEffect } from 'react';
 import type { Route } from './+types/home';
 
 export function meta({}: Route.MetaArgs) {
@@ -8,22 +11,34 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Cards() {
+  const [cards, setCards] = useState<ICard[]>([]);
+
+  useEffect(() => {
+    getCardList();
+  }, []);
+
+  async function getCardList() {
+    let { data: cards, error } = await supabase.from('cards').select('*');
+
+    console.log(cards);
+
+    setCards(cards as unknown as ICard[]);
+  }
+
   return (
-    <>
-      <h2>Карты</h2>
-      <br />
-      <div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis nostrum culpa
-          assumenda suscipit velit deleniti aliquam veniam cupiditate ratione ex.
-        </p>
-        <br />
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid atque vero corporis
-          laborum repellat, quaerat odit quis doloribus tenetur magni reiciendis sequi molestiae
-          delectus aut? Consectetur architecto mollitia nihil minus.
-        </p>
-      </div>
-    </>
+    <div className="container">
+      <h3>Карты нашего банка</h3>
+      <ul>
+        {cards.map((card) => (
+          <li key={card.name}>
+            <h5>{card.name}</h5>
+            <p>{card.description}</p>
+            <p>
+              Начни пользоваться за {card.price} р. (обслуживание - {card.service_fee})
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

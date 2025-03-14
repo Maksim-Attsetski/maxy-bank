@@ -15,7 +15,7 @@ export default function PrivateCabinet() {
     <div className="container">
       <Button to={-1}>Назад</Button>
       <br />
-      <Button to={`/${routes.profile}/${user?.id}`}>Перейти в личный кабинет</Button>
+      <Button to={`/${routes.profile}/${user?.uid}`}>Перейти в личный кабинет</Button>
     </div>
   );
 }
