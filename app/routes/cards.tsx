@@ -1,4 +1,4 @@
-import type { ICard } from 'app/entities/cards';
+import { useCards, type ICard } from 'app/entities/cards';
 import { supabase } from 'app/shared';
 import { useState, useEffect } from 'react';
 import type { Route } from './+types/home';
@@ -11,19 +11,11 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Cards() {
-  const [cards, setCards] = useState<ICard[]>([]);
+  const { cards, onGetCards } = useCards();
 
   useEffect(() => {
-    getCardList();
+    onGetCards();
   }, []);
-
-  async function getCardList() {
-    let { data: cards, error } = await supabase.from('cards').select('*');
-
-    console.log(cards);
-
-    setCards(cards as unknown as ICard[]);
-  }
 
   return (
     <div className="container">

@@ -1,3 +1,5 @@
+import { UserDto, type IUser } from '../users';
+
 export interface ICard {
   id: string;
   uid: string;
@@ -9,6 +11,32 @@ export interface ICard {
   price: number;
   service_fee: number;
 }
+export interface IBankAccount<A = string, C = string> {
+  id: string;
+  uid: string;
+  created_at: string;
+
+  author_id: A;
+  card_id: C;
+  number: number;
+}
+export interface IUserCard<A = string, B = string> {
+  id: string;
+  uid: string;
+  created_at: string;
+  name: string;
+  author_id: A;
+  bank_account_id: B;
+  card_number: number;
+  cvv: number;
+  expire_at: number | null;
+  blocked_at: number | null;
+  archived_at: number | null;
+  pin: number;
+}
+
+export type TFullBankAccount = IBankAccount<IUser, IUserCard>;
+export type TFullUserCard = IUserCard<IUser, TFullBankAccount>;
 
 export const CardDto: ICard = {
   id: '',
@@ -20,4 +48,21 @@ export const CardDto: ICard = {
   benefits: '' as unknown as string[],
   name: '',
   created_at: '',
+};
+
+export const BankAccountDto = {} as TFullBankAccount;
+
+export const UserCardDto: TFullUserCard = {
+  id: '',
+  uid: '',
+  created_at: '',
+  archived_at: null,
+  author_id: UserDto,
+  bank_account_id: BankAccountDto,
+  blocked_at: null,
+  expire_at: null,
+  card_number: 0,
+  cvv: 0,
+  name: '',
+  pin: 0,
 };
