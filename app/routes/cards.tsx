@@ -1,4 +1,4 @@
-import { useCards, type ICard } from 'app/entities/cards';
+import { BankCard, useCards, type ICard } from 'app/entities/cards';
 import { supabase } from 'app/shared';
 import { useState, useEffect } from 'react';
 import type { Route } from './+types/home';
@@ -20,17 +20,12 @@ export default function Cards() {
   return (
     <div className="container">
       <h3>Карты нашего банка</h3>
-      <ul>
+      <br />
+      <div className="flex gap-5">
         {cards.map((card) => (
-          <li key={card.name}>
-            <h5>{card.name}</h5>
-            <p>{card.description}</p>
-            <p>
-              Начни пользоваться за {card.price} р. (обслуживание - {card.service_fee})
-            </p>
-          </li>
+          <BankCard card={card} key={card.name} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
