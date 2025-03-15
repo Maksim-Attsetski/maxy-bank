@@ -81,6 +81,8 @@ export default function Profile() {
 
   return (
     <div className="container">
+      <Button to={-1}>Назад</Button>
+      <br />
       <br />
       <ProfileUserInfo />
       <div className="py-3" />
