@@ -1,8 +1,9 @@
-import { motion, type HTMLMotionProps } from 'framer-motion';
 import React, { type FC, memo } from 'react';
+import { motion, type HTMLMotionProps } from 'framer-motion';
+
 import { cls } from '../utils';
 
-interface IProps extends HTMLMotionProps<'div'> {
+export interface ICardProps extends HTMLMotionProps<'div'> {
   withScale?: boolean;
 }
 
@@ -10,7 +11,7 @@ const card = 'p-5 rounded-lg shadow-xl bg-white';
 const scale = ' cursor-pointer';
 const common = ` cursor-default`;
 
-const Card: FC<IProps> = ({ withScale = true, ...props }) => {
+const Card: FC<ICardProps> = ({ withScale = true, ...props }) => {
   return (
     <motion.div
       {...props}

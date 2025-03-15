@@ -9,8 +9,11 @@ interface IState {
   setCards: (data: ICard[]) => void;
   setUserCards: (data: TFullUserCard[]) => void;
   setCardsRequests: (data: TFullCardRequest[]) => void;
+
   createCardRequest: (data: TFullCardRequest) => void;
   createUserCards: (data: TFullUserCard) => void;
+
+  deleteCardRequest: (id: string) => void;
 }
 
 export const useCardsStore = create<IState>((set) => ({
@@ -21,6 +24,10 @@ export const useCardsStore = create<IState>((set) => ({
   setCards: (cards) => set({ cards: [...cards] }),
   setUserCards: (cards) => set({ userCards: [...cards] }),
   setCardsRequests: (req) => set({ cardsRequests: [...req] }),
+
   createCardRequest: (req) => set((state) => ({ cardsRequests: [...state.cardsRequests, req] })),
   createUserCards: (card) => set((state) => ({ userCards: [...state.userCards, card] })),
+
+  deleteCardRequest: (id) =>
+    set((state) => ({ cardsRequests: [...state.cardsRequests].filter((c) => c.id !== id) })),
 }));

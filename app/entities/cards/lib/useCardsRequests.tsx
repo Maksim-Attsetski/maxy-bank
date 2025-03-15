@@ -7,11 +7,11 @@ import { CardRequestDto, type ICardRequest, type TFullCardRequest } from '../typ
 import { useUsers } from 'app/entities/users';
 
 export const useCardsRequests = (load: boolean = false) => {
-  const { cardsRequests, setCardsRequests, createCardRequest } = useCardsStore();
+  const { cardsRequests, setCardsRequests, createCardRequest, deleteCardRequest } = useCardsStore();
   const { user } = useUsers();
-  const { onGetSelect, onCreateData } = useDataBase<ICardRequest | TFullCardRequest>(
+  const { onGetSelect, onCreateData, onDeleteData } = useDataBase<ICardRequest | TFullCardRequest>(
     'cards-requests',
-    { create: createCardRequest },
+    { create: createCardRequest, delete: deleteCardRequest },
     CardRequestDto
   );
 
@@ -32,5 +32,6 @@ export const useCardsRequests = (load: boolean = false) => {
     setCardsRequests,
     onGetCardsRequests,
     onCreateCardRequest: onCreateData,
+    onDeleteCardRequest: onDeleteData,
   };
 };

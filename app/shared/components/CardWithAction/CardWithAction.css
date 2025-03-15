@@ -1,0 +1,26 @@
+
+.components-CardWithAction {
+  position: relative;
+}
+
+.components-CardWithAction__right-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: all linear 0.2s;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.components-CardWithAction:hover .components-CardWithAction__right-action {
+  opacity: 100;
+  pointer-events: all;
+}

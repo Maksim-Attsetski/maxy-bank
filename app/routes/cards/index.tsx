@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import { BankCard, useCards, useCardsRequests, UserCard, useUserCards } from 'app/entities/cards';
-import { Card, routes } from 'app/shared';
+import { Card, CardWithAction, routes } from 'app/shared';
 
 import type { Route } from '../+types/home';
 
@@ -17,7 +17,7 @@ export default function Cards() {
 
   const { cards } = useCards(true);
   const { userCards } = useUserCards(true);
-  const { cardsRequests } = useCardsRequests(true);
+  const { cardsRequests, onDeleteCardRequest } = useCardsRequests(true);
 
   return (
     <div className="container">
@@ -26,11 +26,14 @@ export default function Cards() {
           <h3>Ваши запросы на карты</h3>
           <br />
           <div className="flex gap-5">
-            {cardsRequests.map((card) => (
-              <Card>
-                <h3>{card.card_id?.name}</h3>
-                <p>{card?.status}</p>
-              </Card>
+            {cardsRequests.map((req) => (
+              <CardWithAction
+                key={req.id}
+                action={<div onClick={() => onDeleteCardRequest(req.id, 'id')}>🗑️</div>}
+              >
+                <h3>{req.card_id?.name}</h3>
+                <p>{req.status}</p>
+              </CardWithAction>
             ))}
             <Card className="w-max my-auto" onClick={() => navigate('/' + routes.add_card)}>
               <p>Оформить карту</p>

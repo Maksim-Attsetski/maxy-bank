@@ -54,9 +54,9 @@ export function useDataBase<T>(url: string, crudFunc: ICrudFunctions, dto?: obje
     }
   };
 
-  const onDeleteData = async (uid: string) => {
+  const onDeleteData = async (uid: string, idType: 'uid' | 'id' = 'uid') => {
     try {
-      const response = await supabase.from(url).delete().eq('uid', uid);
+      const response = await supabase.from(url).delete().eq(idType, uid);
 
       if (response?.error) throw new Error(response?.error?.message);
 
