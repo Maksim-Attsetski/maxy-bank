@@ -4,7 +4,7 @@ import {
   useUserCards,
   type TFullUserCard,
 } from 'app/entities/cards';
-import { Button, Card, cardsImagesUrl, CardUtils, Input, Modal } from 'app/shared';
+import { Button, Card, cardsImagesUrl, CardUtils, Flex, Input, Modal } from 'app/shared';
 import { useState, useEffect } from 'react';
 import type { Route } from '../+types/home';
 import { useParams } from 'react-router';
@@ -90,11 +90,11 @@ export default function CardItem() {
       <br />
       {cardItem ? (
         <Card withScale={false}>
-          <div className="flex justify-self-center gap-3">
+          <Flex className="justify-self-center">
             <h3 className="text-center">{cardItem.name}</h3>
             <p>(до {cardItem.expire_at})</p>
-          </div>
-          <div className="flex gap-2 justify-between">
+          </Flex>
+          <Flex className="justify-between">
             <div>
               <div className="relative">
                 <img
@@ -107,7 +107,7 @@ export default function CardItem() {
                 </Card>
               </div>
             </div>
-            <div className="flex flex-col gap-2 items-end">
+            <Flex className="flex-col items-end">
               <h5>
                 Владелец: {cardItem?.author_id?.first_name} {cardItem?.author_id?.last_name}
               </h5>
@@ -140,8 +140,8 @@ export default function CardItem() {
               ) : (
                 <Button onClick={onBlockCard}>Заблокировать</Button>
               )}
-            </div>
-          </div>
+            </Flex>
+          </Flex>
         </Card>
       ) : (
         <>

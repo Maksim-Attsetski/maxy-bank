@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import { BankCard, useCards, useCardsRequests, UserCard, useUserCards } from 'app/entities/cards';
-import { Card, CardWithAction, routes } from 'app/shared';
+import { Card, CardWithAction, Flex, routes } from 'app/shared';
 
 import type { Route } from '../+types/home';
 
@@ -25,7 +25,7 @@ export default function Cards() {
         <>
           <h3>Ваши запросы на карты</h3>
           <br />
-          <div className="flex gap-5">
+          <Flex className="gap-5">
             {cardsRequests.map((req) => (
               <CardWithAction
                 key={req.id}
@@ -39,7 +39,7 @@ export default function Cards() {
               <p>Оформить карту</p>
               <h2 className="text-center">+</h2>
             </Card>
-          </div>
+          </Flex>
         </>
       )}
       <br />
@@ -47,7 +47,7 @@ export default function Cards() {
         <>
           <h3>Ваши карты</h3>
           <br />
-          <div className="flex gap-5">
+          <Flex className="gap-5">
             {userCards.map((card) => (
               <UserCard card={card} key={card.name} />
             ))}
@@ -55,7 +55,7 @@ export default function Cards() {
               <p>Оформить карту</p>
               <h2 className="text-center">+</h2>
             </Card>
-          </div>
+          </Flex>
         </>
       ) : (
         <>
@@ -70,11 +70,13 @@ export default function Cards() {
       <br />
       <h3>Карты нашего банка</h3>
       <br />
-      <div className="flex gap-5">
+      <Flex className="gap-5 flex-wrap">
         {cards.map((card) => (
-          <BankCard card={card} key={card.name} />
+          <div key={card.name} className="flex-1/3">
+            <BankCard card={card} />
+          </div>
         ))}
-      </div>
+      </Flex>
     </div>
   );
 }

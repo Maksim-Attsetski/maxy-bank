@@ -11,6 +11,10 @@ export interface ICard {
   description: string;
   price: number;
   service_fee: number;
+
+  currencies: string[]; // Валюты, в которых доступна карта
+  limit: number | null; // Лимит по карте (null, если безлимитная)
+  is_virtual: boolean;
 }
 export interface IBankAccount<A = string, C = string> {
   id: string;
@@ -63,6 +67,9 @@ export const CardDto: ICard = {
   benefits: '' as unknown as string[],
   name: '',
   created_at: '',
+  currencies: [],
+  is_virtual: false,
+  limit: 0,
 };
 
 export const BankAccountDto = {} as TFullBankAccount;

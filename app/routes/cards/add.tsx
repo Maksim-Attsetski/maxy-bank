@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useCards, useCardsRequests, type ICard, type ICardRequest } from 'app/entities/cards';
-import { Button, Card, Input, Modal } from 'app/shared';
+import { Button, Card, Flex, Input, Modal } from 'app/shared';
 import { useUsers } from 'app/entities/users';
 
 import type { Route } from './+types/add';
@@ -48,7 +48,7 @@ export default function AddNewCard() {
       <br />
       <h3>Выберите карту для оформления</h3>
       <br />
-      <div className="flex flex-col gap-3">
+      <Flex className="flex-col">
         {cards?.map((card) => (
           <Card
             onClick={() => {
@@ -60,7 +60,7 @@ export default function AddNewCard() {
             <h5>{card?.name}</h5>
           </Card>
         ))}
-      </div>
+      </Flex>
     </div>
   );
 }
