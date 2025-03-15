@@ -16,7 +16,7 @@ interface IProps extends Omit<HTMLMotionProps<'button'>, 'ref'> {
 }
 
 const commonCls =
-  'rounded-xl border-[1px] border-solid py-1 px-5 font-medium shadow-lg w-max transition-all hover:bg-primary hover:text-text';
+  'rounded-xl border-[1px] border-solid py-1 px-5 font-medium shadow-lg w-max transition-all hover:bg-primary hover:text-text cursor-pointer';
 const primaryCls = 'border-transparent bg-primary text-text';
 const secondaryCls = 'border-primary';
 
@@ -25,8 +25,13 @@ const Button: FC<IProps> = ({ variant, to, ...btnProps }) => {
 
   const className: string = useMemo(
     () =>
-      cls(commonCls, variant === 'primary' ? primaryCls : secondaryCls, btnProps?.className ?? ''),
-    [variant]
+      cls(
+        commonCls,
+        variant === 'primary' ? primaryCls : secondaryCls,
+        btnProps?.className ?? '',
+        btnProps?.disabled ? 'opacity-60 cursor-not-allowed' : ''
+      ),
+    [variant, btnProps?.disabled]
   );
 
   const onButtonClick: MouseEventHandler<HTMLButtonElement> = (event) => {

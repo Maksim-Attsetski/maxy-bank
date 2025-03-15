@@ -1,5 +1,10 @@
-import { useUserCards, type TFullUserCard } from 'app/entities/cards';
-import { Button, Card, cardsImagesUrl, CardUtils } from 'app/shared';
+import {
+  ChangeNameModal,
+  ChangePinModal,
+  useUserCards,
+  type TFullUserCard,
+} from 'app/entities/cards';
+import { Button, Card, cardsImagesUrl, CardUtils, Input, Modal } from 'app/shared';
 import { useState, useEffect } from 'react';
 import type { Route } from '../+types/home';
 import { useParams } from 'react-router';
@@ -14,6 +19,9 @@ export function meta({}: Route.MetaArgs) {
 export default function CardItem() {
   const paramsId = useParams()?.uid;
   const [cardItem, setCardItem] = useState<TFullUserCard | null>(null);
+
+  const [changeNameModal, setChangeNameModal] = useState(false);
+  const [changePincodeModal, setChangePincodeModal] = useState(false);
 
   const { onGetUserCard, onUpdateUserCard } = useUserCards();
 
@@ -34,6 +42,21 @@ export default function CardItem() {
       setCardItem((prev) => (prev ? { ...prev, ...newCard } : prev));
     }
   };
+  const onSaveCardName = async (name: string) => {
+    if (cardItem?.uid) {
+      const newCard = { name, uid: cardItem.uid } as TFullUserCard;
+      await onUpdateUserCard(newCard);
+      setCardItem((prev) => (prev ? { ...prev, ...newCard } : prev));
+    }
+  };
+
+  const onSaveCardPin = async (pin: string) => {
+    if (cardItem?.uid) {
+      const newCard = { pin: +pin, uid: cardItem.uid } as TFullUserCard;
+      await onUpdateUserCard(newCard);
+      setCardItem((prev) => (prev ? { ...prev, ...newCard } : prev));
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -46,6 +69,32 @@ export default function CardItem() {
 
   return (
     <div className="container">
+      <Modal open={changeNameModal} setOpen={setChangeNameModal}>
+        <>
+          <h3>Изменить название</h3>
+          <br />
+          <Input value={cardItem?.name} />
+          <br />
+          <br />
+          <Button variant="primary">Сохранить</Button>
+        </>
+      </Modal>
+      {cardItem && (
+        <>
+          <ChangeNameModal
+            onSave={onSaveCardName}
+            card={cardItem}
+            open={changeNameModal}
+            setOpen={setChangeNameModal}
+          />
+          <ChangePinModal
+            onSave={onSaveCardPin}
+            card={cardItem}
+            open={changePincodeModal}
+            setOpen={setChangePincodeModal}
+          />
+        </>
+      )}
       <Button to={-1}>Назад</Button>
       <br />
       <br />
@@ -81,10 +130,16 @@ export default function CardItem() {
                   </p>
                 </>
               ) : (
-                <Button variant="primary">Оформить счёт</Button>
+                <Button
+                  variant="primary"
+                  title={cardItem?.blocked_at ? 'Карта заблокирована' : ''}
+                  disabled={!!cardItem?.blocked_at}
+                >
+                  Оформить счёт
+                </Button>
               )}
-              <Button>Сменить pin код</Button>
-              <Button>Сменить имя</Button>
+              <Button onClick={() => setChangePincodeModal(true)}>Сменить pin код</Button>
+              <Button onClick={() => setChangeNameModal(true)}>Сменить имя</Button>
               {cardItem?.blocked_at ? (
                 <Button variant="primary" onClick={onUnblockCard}>
                   Разблокировать

@@ -1,4 +1,6 @@
 import BankCard from './BankCard';
+import ChangeNameModal from './ChangeNameModal';
+import ChangePinModal from './ChangePinModal';
 import UserCard from './UserCard';
 
-export { UserCard, BankCard };
+export { ChangePinModal, ChangeNameModal, UserCard, BankCard };
