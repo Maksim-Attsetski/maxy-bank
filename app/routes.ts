@@ -13,10 +13,7 @@ export default [
 
     ...prefix('cards', [
       index('routes/cards/index.tsx'),
-      ...prefix('add', [
-        index('routes/cards/add/index.tsx'),
-        route(':uid', 'routes/cards/add/add_card.tsx'),
-      ]),
+      route('add', 'routes/cards/add.tsx'),
       route(':uid', 'routes/cards/card.tsx'),
     ]),
 

@@ -1,5 +1,5 @@
 import type { StoreApi, UseBoundStore } from 'zustand';
-import { supabase } from '../utils';
+import { convertDto, supabase } from '../utils';
 
 interface ICrudFunctions {
   set?: (d: any[]) => void;
@@ -8,7 +8,7 @@ interface ICrudFunctions {
   delete?: (d: string) => void;
 }
 
-export function useDataBase<T>(url: string, crudFunc: ICrudFunctions) {
+export function useDataBase<T>(url: string, crudFunc: ICrudFunctions, dto?: object) {
   const onGetSelect = (select: string = '*') => {
     return supabase.from(url).select(select);
   };
@@ -40,7 +40,11 @@ export function useDataBase<T>(url: string, crudFunc: ICrudFunctions) {
 
   const onCreateData = async (values: T) => {
     try {
-      const response = await supabase.from(url).insert([values]).select().single();
+      const response = await supabase
+        .from(url)
+        .insert([values])
+        .select(dto ? convertDto(dto) : undefined)
+        .single();
 
       if (response?.error) throw new Error(response?.error?.message);
 

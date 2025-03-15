@@ -1,3 +1,4 @@
+import type { TStatus } from 'app/shared';
 import { UserDto, type IUser } from '../users';
 
 export interface ICard {
@@ -35,9 +36,22 @@ export interface IUserCard<A = string, B = string> {
   pin: number;
   card_bg: number;
 }
+export interface ICardRequest<C = string, U = string> {
+  id: string;
+  created_at: string;
+
+  status: TStatus;
+  rejected_at: string | null;
+  reject_reason: string | null;
+  description: string | null;
+
+  card_id: C;
+  user_id: U;
+}
 
 export type TFullBankAccount = IBankAccount<IUser, IUserCard>;
 export type TFullUserCard = IUserCard<IUser, TFullBankAccount>;
+export type TFullCardRequest = ICardRequest<ICard>;
 
 export const CardDto: ICard = {
   id: '',
@@ -68,3 +82,13 @@ export const UserCardDto: TFullUserCard = {
   author_id: UserDto,
   bank_account_id: BankAccountDto,
 };
+
+export const CardRequestDto = {
+  created_at: '',
+  description: '',
+  id: '',
+  reject_reason: '',
+  status: 'PENDING',
+  rejected_at: null,
+  card_id: CardDto,
+} as ICardRequest<ICard>;

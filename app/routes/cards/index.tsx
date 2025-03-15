@@ -1,10 +1,9 @@
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
-import { BankCard, useCards, UserCard, useUserCards } from 'app/entities/cards';
+import { BankCard, useCards, useCardsRequests, UserCard, useUserCards } from 'app/entities/cards';
 import { Card, routes } from 'app/shared';
 
 import type { Route } from '../+types/home';
-import { useNavigate } from 'react-router';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -16,15 +15,31 @@ export function meta({}: Route.MetaArgs) {
 export default function Cards() {
   const navigate = useNavigate();
 
-  const { cards, onGetCards } = useCards();
+  const { cards } = useCards(true);
   const { userCards } = useUserCards(true);
-
-  useEffect(() => {
-    onGetCards();
-  }, []);
+  const { cardsRequests } = useCardsRequests(true);
 
   return (
     <div className="container">
+      {cardsRequests.length > 0 && (
+        <>
+          <h3>Ваши запросы на карты</h3>
+          <br />
+          <div className="flex gap-5">
+            {cardsRequests.map((card) => (
+              <Card>
+                <h3>{card.card_id?.name}</h3>
+                <p>{card?.status}</p>
+              </Card>
+            ))}
+            <Card className="w-max my-auto" onClick={() => navigate('/' + routes.add_card)}>
+              <p>Оформить карту</p>
+              <h2 className="text-center">+</h2>
+            </Card>
+          </div>
+        </>
+      )}
+      <br />
       {userCards.length > 0 ? (
         <>
           <h3>Ваши карты</h3>

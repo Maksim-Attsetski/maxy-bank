@@ -11,7 +11,7 @@ interface IProps {
 const UserCard: FC<IProps> = ({ card }) => {
   const navigate = useNavigate();
   return (
-    <Card onClick={() => navigate(card?.uid)}>
+    <div onClick={() => navigate(card?.uid)}>
       <h5 className="text-center">{card.name}</h5>
       <img
         className="w-60 h-30 rounded-2xl"
@@ -19,7 +19,7 @@ const UserCard: FC<IProps> = ({ card }) => {
         alt="bg"
       />
       <p className="text-right px-3">{CardUtils.maskLastDigits(card.card_number)}</p>
-    </Card>
+    </div>
   );
 };
 
