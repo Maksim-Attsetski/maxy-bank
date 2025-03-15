@@ -5,6 +5,8 @@ import { Button, Card, Flex, Input, Modal } from 'app/shared';
 import { useUsers } from 'app/entities/users';
 
 import type { Route } from './+types/add';
+import { useAuth } from 'app/entities/auth';
+import { AuthModal } from 'app/shared/modals';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -16,6 +18,7 @@ export function meta({}: Route.MetaArgs) {
 export default function AddNewCard() {
   const { cards } = useCards(true);
   const { user } = useUsers();
+  const { isAuth } = useAuth();
   const { onCreateCardRequest } = useCardsRequests(true);
 
   const [selectedCard, setSelectedCard] = useState<ICard | null>(null);
@@ -48,19 +51,21 @@ export default function AddNewCard() {
       <br />
       <h3>Выберите карту для оформления</h3>
       <br />
-      <Flex className="flex-col">
-        {cards?.map((card) => (
-          <Card
-            onClick={() => {
-              setSelectedCard(card);
-              setRequestModalOpen(true);
-            }}
-            key={card?.uid}
-          >
-            <h5>{card?.name}</h5>
-          </Card>
-        ))}
-      </Flex>
+      <AuthModal>
+        <Flex className="flex-col">
+          {cards?.map((card) => (
+            <Card
+              onClick={() => {
+                setSelectedCard(card);
+                setRequestModalOpen(true);
+              }}
+              key={card?.uid}
+            >
+              <h5>{card?.name}</h5>
+            </Card>
+          ))}
+        </Flex>
+      </AuthModal>
     </div>
   );
 }

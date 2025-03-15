@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 
 import { BankCard, useCards, useCardsRequests, UserCard, useUserCards } from 'app/entities/cards';
-import { Card, CardWithAction, Flex, routes } from 'app/shared';
+import { Card, CardApply, CardWithAction, Flex, routes } from 'app/shared';
 
 import type { Route } from '../+types/home';
 
@@ -35,10 +35,7 @@ export default function Cards() {
                 <p>{req.status}</p>
               </CardWithAction>
             ))}
-            <Card className="w-max my-auto" onClick={() => navigate('/' + routes.add_card)}>
-              <p>Оформить карту</p>
-              <h2 className="text-center">+</h2>
-            </Card>
+            <CardApply />
           </Flex>
         </>
       )}
@@ -51,20 +48,14 @@ export default function Cards() {
             {userCards.map((card) => (
               <UserCard card={card} key={card.name} />
             ))}
-            <Card className="w-max my-auto" onClick={() => navigate('/' + routes.add_card)}>
-              <p>Оформить карту</p>
-              <h2 className="text-center">+</h2>
-            </Card>
+            <CardApply />
           </Flex>
         </>
       ) : (
         <>
           <h3>У вас нет карт</h3>
           <br />
-          <Card className="w-max" onClick={() => navigate('/' + routes.add_card)}>
-            <p>Оформить карту</p>
-            <h2 className="text-center">+</h2>
-          </Card>
+          <CardApply />
         </>
       )}
       <br />
