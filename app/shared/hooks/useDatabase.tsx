@@ -25,15 +25,10 @@ export function useDataBase<T>(url: string, crudFunc: ICrudFunctions) {
     }
   };
 
-  const onUpdateData = async (values: T & { uid: string }) => {
+  const onUpdateData = async (values: Partial<T & { uid: string }>) => {
     try {
       if (!values?.uid) throw new Error('uid обязательный параметр!');
-      const response = await supabase
-        .from(url)
-        .update(values)
-        .eq('uid', values?.uid)
-        .select()
-        .single();
+      const response = await supabase.from(url).update(values).eq('uid', values?.uid).select('*');
 
       if (response?.error) throw new Error(response?.error?.message);
 

@@ -27,3 +27,4 @@ export const authRoutes = {
 const sbUrl = 'https://ptpiibeyfahlotxjmnqa.supabase.co';
 export const imagesUrl = sbUrl + '/storage/v1/object/public/images/';
 export const avatarsImagesUrl = imagesUrl + 'user-avatars/';
+export const cardsImagesUrl = imagesUrl + 'cards/';

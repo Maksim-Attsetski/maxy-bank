@@ -1,3 +1,4 @@
 import BankCard from './BankCard';
+import UserCard from './UserCard';
 
-export { BankCard };
+export { UserCard, BankCard };

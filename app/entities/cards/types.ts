@@ -29,10 +29,11 @@ export interface IUserCard<A = string, B = string> {
   bank_account_id: B;
   card_number: number;
   cvv: number;
-  expire_at: number | null;
-  blocked_at: number | null;
-  archived_at: number | null;
+  expire_at: string | null;
+  blocked_at: string | null;
+  archived_at: string | null;
   pin: number;
+  card_bg: number;
 }
 
 export type TFullBankAccount = IBankAccount<IUser, IUserCard>;
@@ -57,12 +58,13 @@ export const UserCardDto: TFullUserCard = {
   uid: '',
   created_at: '',
   archived_at: null,
-  author_id: UserDto,
-  bank_account_id: BankAccountDto,
   blocked_at: null,
   expire_at: null,
   card_number: 0,
   cvv: 0,
   name: '',
+  card_bg: 1,
   pin: 0,
+  author_id: UserDto,
+  bank_account_id: BankAccountDto,
 };

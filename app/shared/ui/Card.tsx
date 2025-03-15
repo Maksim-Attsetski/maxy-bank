@@ -6,7 +6,7 @@ interface IProps extends HTMLMotionProps<'div'> {
   withScale?: boolean;
 }
 
-const card = 'p-5 rounded-lg shadow-xl';
+const card = 'p-5 rounded-lg shadow-xl bg-white';
 const scale = ' cursor-pointer';
 const common = ` cursor-default`;
 
@@ -14,7 +14,7 @@ const Card: FC<IProps> = ({ withScale = true, ...props }) => {
   return (
     <motion.div
       {...props}
-      className={cls(card, withScale ? scale : common, 'bg-white')}
+      className={cls(card, withScale ? scale : common, props?.className ?? '')}
       whileHover={withScale ? { scale: 1.05 } : undefined}
     />
   );

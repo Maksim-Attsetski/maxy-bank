@@ -7,6 +7,7 @@ interface IState {
 
   setCards: (data: ICard[]) => void;
   setUserCards: (data: TFullUserCard[]) => void;
+  createUserCards: (data: TFullUserCard) => void;
 }
 
 export const useCardsStore = create<IState>((set) => ({
@@ -15,4 +16,5 @@ export const useCardsStore = create<IState>((set) => ({
 
   setCards: (cards) => set({ cards: [...cards] }),
   setUserCards: (cards) => set({ userCards: [...cards] }),
+  createUserCards: (card) => set((state) => ({ userCards: [...state.userCards, card] })),
 }));

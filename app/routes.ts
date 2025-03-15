@@ -8,9 +8,10 @@ export default [
     index('routes/home.tsx'),
     route(routes.about, 'routes/about.tsx'),
     route(routes.support, 'routes/support.tsx'),
-    route(routes.cards, 'routes/cards.tsx'),
     route(routes.currency_exchange, 'routes/currency_exchange.tsx'),
     route(routes.deposits, 'routes/deposits.tsx'),
+
+    ...prefix('cards', [index('routes/cards/index.tsx'), route(':uid', 'routes/cards/card.tsx')]),
 
     ...prefix('profile', [
       index('routes/profile/private_cabinet.tsx'),
