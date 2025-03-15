@@ -11,7 +11,14 @@ export default [
     route(routes.currency_exchange, 'routes/currency_exchange.tsx'),
     route(routes.deposits, 'routes/deposits.tsx'),
 
-    ...prefix('cards', [index('routes/cards/index.tsx'), route(':uid', 'routes/cards/card.tsx')]),
+    ...prefix('cards', [
+      index('routes/cards/index.tsx'),
+      ...prefix('add', [
+        index('routes/cards/add/index.tsx'),
+        route(':uid', 'routes/cards/add/add_card.tsx'),
+      ]),
+      route(':uid', 'routes/cards/card.tsx'),
+    ]),
 
     ...prefix('profile', [
       index('routes/profile/private_cabinet.tsx'),

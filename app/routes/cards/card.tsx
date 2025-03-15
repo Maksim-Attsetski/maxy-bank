@@ -69,16 +69,6 @@ export default function CardItem() {
 
   return (
     <div className="container">
-      <Modal open={changeNameModal} setOpen={setChangeNameModal}>
-        <>
-          <h3>Изменить название</h3>
-          <br />
-          <Input value={cardItem?.name} />
-          <br />
-          <br />
-          <Button variant="primary">Сохранить</Button>
-        </>
-      </Modal>
       {cardItem && (
         <>
           <ChangeNameModal
@@ -118,6 +108,9 @@ export default function CardItem() {
               </div>
             </div>
             <div className="flex flex-col gap-2 items-end">
+              <h5>
+                Владелец: {cardItem?.author_id?.first_name} {cardItem?.author_id?.last_name}
+              </h5>
               {cardItem.bank_account_id ? (
                 <>
                   <p>

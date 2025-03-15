@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 
 import { BankCard, useCards, UserCard, useUserCards } from 'app/entities/cards';
-import { Card } from 'app/shared';
+import { Card, routes } from 'app/shared';
 
 import type { Route } from '../+types/home';
+import { useNavigate } from 'react-router';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -13,6 +14,8 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Cards() {
+  const navigate = useNavigate();
+
   const { cards, onGetCards } = useCards();
   const { userCards } = useUserCards(true);
 
@@ -30,13 +33,20 @@ export default function Cards() {
             {userCards.map((card) => (
               <UserCard card={card} key={card.name} />
             ))}
+            <Card className="w-max my-auto" onClick={() => navigate('/' + routes.add_card)}>
+              <p>Оформить карту</p>
+              <h2 className="text-center">+</h2>
+            </Card>
           </div>
         </>
       ) : (
         <>
           <h3>У вас нет карт</h3>
           <br />
-          <Card className="w-max">Оформить карту</Card>
+          <Card className="w-max" onClick={() => navigate('/' + routes.add_card)}>
+            <p>Оформить карту</p>
+            <h2 className="text-center">+</h2>
+          </Card>
         </>
       )}
       <br />

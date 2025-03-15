@@ -1,6 +1,5 @@
 import { Button, Input } from 'app/shared';
 import type { Route } from './+types/home';
-import { Formik } from 'formik';
 
 export function meta({}: Route.MetaArgs) {
   return [
