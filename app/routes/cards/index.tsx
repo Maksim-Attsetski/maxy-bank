@@ -1,7 +1,5 @@
-import { useNavigate } from 'react-router';
-
 import { BankCard, useCards, useCardsRequests, UserCard, useUserCards } from 'app/entities/cards';
-import { Card, CardWithAction, Flex, routes } from 'app/shared';
+import { Appear, CardApply, CardWithAction, Empty, Flex } from 'app/shared';
 
 import type { Route } from '../+types/home';
 
@@ -13,8 +11,6 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Cards() {
-  const navigate = useNavigate();
-
   const { cards } = useCards(true);
   const { userCards } = useUserCards(true);
   const { cardsRequests, onDeleteCardRequest } = useCardsRequests(true);
@@ -23,7 +19,9 @@ export default function Cards() {
     <div className="container">
       {cardsRequests.length > 0 && (
         <>
-          <h3>Ваши запросы на карты</h3>
+          <Appear>
+            <h3>Ваши запросы на карты</h3>
+          </Appear>
           <br />
           <Flex className="gap-5">
             {cardsRequests.map((req) => (
@@ -35,40 +33,34 @@ export default function Cards() {
                 <p>{req.status}</p>
               </CardWithAction>
             ))}
-            <Card className="w-max my-auto" onClick={() => navigate('/' + routes.add_card)}>
-              <p>Оформить карту</p>
-              <h2 className="text-center">+</h2>
-            </Card>
+            <CardApply />
           </Flex>
         </>
       )}
       <br />
       {userCards.length > 0 ? (
         <>
-          <h3>Ваши карты</h3>
+          <Appear>
+            <h3>Ваши карты</h3>
+          </Appear>
           <br />
           <Flex className="gap-5">
             {userCards.map((card) => (
               <UserCard card={card} key={card.name} />
             ))}
-            <Card className="w-max my-auto" onClick={() => navigate('/' + routes.add_card)}>
-              <p>Оформить карту</p>
-              <h2 className="text-center">+</h2>
-            </Card>
+            <CardApply />
           </Flex>
         </>
       ) : (
-        <>
-          <h3>У вас нет карт</h3>
-          <br />
-          <Card className="w-max" onClick={() => navigate('/' + routes.add_card)}>
-            <p>Оформить карту</p>
-            <h2 className="text-center">+</h2>
-          </Card>
-        </>
+        <Empty title="У вас нет карт">
+          <CardApply />
+        </Empty>
       )}
       <br />
-      <h3>Карты нашего банка</h3>
+      <Appear>
+        <h3>Карты нашего банка</h3>
+      </Appear>
+
       <br />
       <Flex className="gap-5 flex-wrap">
         {cards.map((card) => (

@@ -10,10 +10,12 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Signup() {
   return (
-    <div className="container">
-      <h2>Регистрация</h2>
-      <br />
-      <Button to={'/'}>Назад</Button>
+    <div className="layout">
+      <div className="container">
+        <h2>Регистрация</h2>
+        <br />
+        <Button to={'/'}>Назад</Button>
+      </div>
     </div>
   );
 }

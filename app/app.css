@@ -1,9 +1,26 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @theme {
   --color-grey: #f4f4f4;
   --color-primary: #3772FF;
-  --color-text: #f7f7f7;
+  --color-text: #333;
+
+  --color-bg-paper: #f5f5f7;
+  --color-bg-default: #fff;
+
+}
+
+[data-theme=dark] {
+  /* @theme { */
+    --color-grey: #fff;
+    --color-primary: #5460fe;
+    --color-text: #eee;
+    
+    --color-bg-paper: #2e2f30;
+    --color-bg-default: #222222;
+  /* } */
 }
 
 body {
@@ -12,7 +29,7 @@ body {
 }
 
 .layout {
-  @apply flex flex-col justify-between bg-grey min-h-screen;
+  @apply flex flex-col justify-between bg-bg-default min-h-screen transition-all;
 }
 
 footer {
@@ -42,4 +59,24 @@ h4 {
 }
 h5 {
   @apply text-xl font-medium;
+}
+
+input, textarea {
+  @apply placeholder:text-text caret-text text-text;
+}
+
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  @apply text-text;
+}
+a {
+  @apply text-text transition-all;
+}
+a.active {
+  @apply text-primary;
 }

@@ -1,5 +1,5 @@
 import React, { type FC } from 'react';
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 
 import { FaRegUser } from 'react-icons/fa';
 
@@ -8,21 +8,31 @@ import { Button, Flex } from '../ui';
 
 import { useAuth } from 'app/entities/auth';
 import { useUsers } from 'app/entities/users';
+import { useTheme } from '../hooks';
+
+const headerLinks = [
+  { text: 'Карты', to: routes.cards },
+  { text: 'Вклады', to: routes.deposits },
+  { text: 'Курсы валют', to: routes.currency_exchange },
+];
 
 const Header: FC = () => {
   const { isAuth, onLogout } = useAuth();
   const { user } = useUsers();
+  const { theme, onToggleTheme } = useTheme(true);
 
   return (
     <header className="container py-3">
       <Flex className="justify-between">
-        <div>
+        <Link to={'/'}>
           <h4>Maxy Bank</h4>
-        </div>
+        </Link>
         <Flex>
-          <Link to={routes.cards}>Карты</Link>
-          <Link to={routes.deposits}>Вклады</Link>
-          <Link to={routes.currency_exchange}>Курсы валют</Link>
+          {headerLinks.map(({ text, to }) => (
+            <NavLink key={to} to={to}>
+              {text}
+            </NavLink>
+          ))}
         </Flex>
         {isAuth ? (
           <Flex>
@@ -37,12 +47,13 @@ const Header: FC = () => {
             </Button>
           </Flex>
         ) : (
-          <div className="flex gap-2">
+          <Flex>
+            <Button onClick={onToggleTheme}>{theme}</Button>
             <Button to={authRoutes.signup} variant="primary">
               Регистрация
             </Button>
             <Button to={authRoutes.login}>Войти</Button>
-          </div>
+          </Flex>
         )}
       </Flex>
     </header>

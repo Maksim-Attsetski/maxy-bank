@@ -40,61 +40,65 @@ export default function Login() {
   };
 
   return (
-    <div className="container">
-      <h2>Авторизация</h2>
-      <br />
-      <Button to={'/'}>Назад</Button>
-      <br />
-      <br />
-      <Formik
-        initialValues={{ email: '', password: '' }}
-        validate={(values) => {
-          const errors: { email?: string } = {};
-          if (!values.email) {
-            errors.email = 'Required';
-          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-            errors.email = 'Invalid email address';
-          }
-          return errors;
-        }}
-        onSubmit={(values, { setSubmitting }) => {
-          onSubmit(values);
-          setSubmitting(false);
-        }}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-          /* and other goodies */
-        }) => (
-          <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-            <Input
-              type="email"
-              name="email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-            />
-            {errors.email && touched.email && errors.email}
-            <Input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />
-            {errors.password && touched.password && errors.password}
-            <Button variant="primary" type="submit" disabled={isSubmitting}>
-              Submit
-            </Button>
-          </form>
-        )}
-      </Formik>
+    <div className="layout">
+      <div className="container">
+        <h2>Авторизация</h2>
+        <br />
+        <Button to={'/'}>Назад</Button>
+        <br />
+        <br />
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          validate={(values) => {
+            const errors: { email?: string } = {};
+            if (!values.email) {
+              errors.email = 'Обязательно к заполнению';
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+              errors.email = 'Введите валидный адрес';
+            }
+            return errors;
+          }}
+          onSubmit={(values, { setSubmitting }) => {
+            onSubmit(values);
+            setSubmitting(false);
+          }}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+            /* and other goodies */
+          }) => (
+            <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+              <Input
+                type="email"
+                name="email"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+                placeholder="E-mail"
+              />
+              <p>{errors.email && touched.email && errors.email}</p>
+              <Input
+                type="password"
+                name="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+                placeholder="Пароль"
+              />
+              <p>{errors.password && touched.password && errors.password}</p>
+              <Button variant="primary" type="submit" disabled={isSubmitting}>
+                Продолжить
+              </Button>
+            </form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 }

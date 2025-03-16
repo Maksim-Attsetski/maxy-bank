@@ -12,7 +12,7 @@ const CardWithAction: FC<IProps> = ({ action, ...props }) => {
   return (
     <div className="components-CardWithAction">
       <Card {...props} />
-      <div className="components-CardWithAction__right-action bg-text">{action}</div>
+      <div className="components-CardWithAction__right-action bg-bg-paper">{action}</div>
     </div>
   );
 };

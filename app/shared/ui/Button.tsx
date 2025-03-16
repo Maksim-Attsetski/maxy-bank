@@ -16,9 +16,9 @@ interface IProps extends Omit<HTMLMotionProps<'button'>, 'ref'> {
 }
 
 const commonCls =
-  'rounded-xl border-[1px] border-solid py-1 px-5 font-medium shadow-lg w-max transition-all hover:bg-primary hover:text-text cursor-pointer';
-const primaryCls = 'border-transparent bg-primary text-text';
-const secondaryCls = 'border-primary';
+  'rounded-xl border-[1px] border-solid py-1.5 px-5 font-medium shadow-lg w-max transition-all hover:bg-primary cursor-pointer';
+const primaryCls = 'text-white border-transparent bg-primary ';
+const secondaryCls = 'border-primary text-primary hover:text-white';
 
 const Button: FC<IProps> = ({ variant, to, ...btnProps }) => {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const Button: FC<IProps> = ({ variant, to, ...btnProps }) => {
   return (
     <motion.button
       {...btnProps}
-      whileHover={{ scale: 1.03 }}
+      whileHover={{ scale: 1.04 }}
       whileTap={{ scale: 0.96 }}
       className={className}
       onClick={onButtonClick}
