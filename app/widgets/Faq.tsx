@@ -39,9 +39,11 @@ const Faq: FC = () => {
                   </p>
                   <ul>
                     {item.items.map((text) => (
-                      <li key={text}>
-                        <span className="text-primary w-4 h-0.5 rounded-xl bg-primary inline-block my-1"></span>{' '}
-                        {text}
+                      <li className="my-0.5" key={text}>
+                        <p>
+                          <span className="text-primary w-4 h-0.5 rounded-xl bg-primary inline-block my-1"></span>{' '}
+                          {text}
+                        </p>
                       </li>
                     ))}
                   </ul>
