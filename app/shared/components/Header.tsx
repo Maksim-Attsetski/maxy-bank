@@ -29,11 +29,7 @@ const Header: FC = () => {
         </Link>
         <Flex>
           {headerLinks.map(({ text, to }) => (
-            <NavLink
-              key={to}
-              className={({ isActive }) => (isActive ? 'text-primary' : '')}
-              to={to}
-            >
+            <NavLink key={to} to={to}>
               {text}
             </NavLink>
           ))}

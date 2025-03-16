@@ -28,7 +28,7 @@ const AuthModal: FC<PropsWithChildren> = ({ children }) => {
         <br />
         <Flex className="ml-auto">
           <Button onClick={() => setIsOpen(false)}>Закрыть</Button>
-          <Button variant="primary" to={authRoutes.signup}>
+          <Button variant="primary" to={'/' + authRoutes.signup}>
             Перейти
           </Button>
         </Flex>

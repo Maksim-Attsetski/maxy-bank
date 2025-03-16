@@ -70,3 +70,9 @@ h4,
 h5 {
   @apply text-text;
 }
+a {
+  @apply text-text transition-all;
+}
+a.active {
+  @apply text-primary;
+}

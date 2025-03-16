@@ -6,8 +6,12 @@ const Footer: FC = () => {
     <footer>
       <p>Maxy Bank</p>
       <p>Инфо о сайте</p>
-      <Link to={'/about'}>О нас</Link>
-      <Link to={'/support'}>Поддержка</Link>
+      <Link className="text-text" to={'/about'}>
+        О нас
+      </Link>
+      <Link className="text-text" to={'/support'}>
+        Поддержка
+      </Link>
     </footer>
   );
 };
