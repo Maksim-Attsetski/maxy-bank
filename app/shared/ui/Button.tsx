@@ -16,7 +16,7 @@ interface IProps extends Omit<HTMLMotionProps<'button'>, 'ref'> {
 }
 
 const commonCls =
-  'rounded-xl border-[1px] border-solid py-1 px-5 font-medium shadow-lg w-max transition-all hover:bg-primary cursor-pointer';
+  'rounded-xl border-[1px] border-solid py-1.5 px-5 font-medium shadow-lg w-max transition-all hover:bg-primary cursor-pointer';
 const primaryCls = 'text-white border-transparent bg-primary ';
 const secondaryCls = 'border-primary text-primary hover:text-white';
 
