@@ -1,11 +1,11 @@
-import React, { type FC, memo, type PropsWithChildren, useState } from 'react';
+import { type FC, memo, type PropsWithChildren, type ReactNode, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Flex from './Flex';
 
 interface IProps extends PropsWithChildren {
   childrenKey: string;
-  title: string;
+  title: string | ReactNode;
 }
 
 const Accordion: FC<IProps> = ({ children, childrenKey, title }) => {

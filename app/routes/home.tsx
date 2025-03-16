@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Route } from './+types/home';
-import { Accordion, Flex } from 'app/shared';
+import { Accordion, Appear, Flex } from 'app/shared';
 import { motion } from 'framer-motion';
 import { useFaq } from 'app/entities/info';
 
@@ -87,10 +87,12 @@ export default function Home() {
   return (
     <div className="container">
       <br />
-      <h2>
-        Добро пожаловать в{' '}
-        <span className="bg-primary py-1 px-3 text-text rounded-2xl">Maxy Bank</span>
-      </h2>
+      <Appear>
+        <h2>
+          Добро пожаловать в{' '}
+          <span className="bg-primary py-1 px-3 text-text rounded-2xl">Maxy Bank</span>
+        </h2>
+      </Appear>
       <br />
       <Accordion childrenKey={'qau'} title={'Часто задаваемые вопросы'}>
         {faq.map(({ questions, description, title }) => (
