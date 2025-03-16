@@ -99,28 +99,41 @@ export default function Home() {
           <>
             <Accordion withoutBg childrenKey={title} title={title} key={title}>
               <p className="font-medium mb-2">{description}</p>
-              <Flex className="flex-col items-start">
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: {
+                    opacity: 1,
+                    transition: { staggerChildren: 0.25 },
+                  },
+                }}
+                initial="hidden"
+                animate="show"
+                className="flex gap-3 flex-col items-start"
+              >
                 {questions.map((item, inx) => (
-                  <React.Fragment key={item.title}>
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      show: { opacity: 1, y: 0 },
+                    }}
+                    key={item.title}
+                  >
                     <p className="font-medium">
                       {item?.isNumList && <span className="text-primary">{inx + 1}. </span>}
                       {item.title}
                     </p>
-                    <motion.ul
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delayChildren: 0.1, staggerChildren: 0.5 }}
-                    >
+                    <ul>
                       {item.items.map((text) => (
-                        <motion.li key={text}>
+                        <li key={text}>
                           <span className="text-primary w-4 h-0.5 rounded-xl bg-primary inline-block my-1"></span>{' '}
                           {text}
-                        </motion.li>
+                        </li>
                       ))}
-                    </motion.ul>
-                  </React.Fragment>
+                    </ul>
+                  </motion.div>
                 ))}
-              </Flex>
+              </motion.div>
             </Accordion>
             <br />
           </>
