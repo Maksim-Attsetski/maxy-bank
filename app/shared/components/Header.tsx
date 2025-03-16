@@ -1,5 +1,5 @@
 import React, { type FC } from 'react';
-import { Link } from 'react-router';
+import { Link, NavLink } from 'react-router';
 
 import { FaRegUser } from 'react-icons/fa';
 
@@ -9,6 +9,12 @@ import { Button, Flex } from '../ui';
 import { useAuth } from 'app/entities/auth';
 import { useUsers } from 'app/entities/users';
 
+const headerLinks = [
+  { text: 'Карты', to: routes.cards },
+  { text: 'Вклады', to: routes.deposits },
+  { text: 'Курсы валют', to: routes.currency_exchange },
+];
+
 const Header: FC = () => {
   const { isAuth, onLogout } = useAuth();
   const { user } = useUsers();
@@ -16,13 +22,19 @@ const Header: FC = () => {
   return (
     <header className="container py-3">
       <Flex className="justify-between">
-        <div>
+        <Link to={'/'}>
           <h4>Maxy Bank</h4>
-        </div>
+        </Link>
         <Flex>
-          <Link to={routes.cards}>Карты</Link>
-          <Link to={routes.deposits}>Вклады</Link>
-          <Link to={routes.currency_exchange}>Курсы валют</Link>
+          {headerLinks.map(({ text, to }) => (
+            <NavLink
+              key={to}
+              className={({ isActive }) => (isActive ? 'text-primary' : '')}
+              to={to}
+            >
+              {text}
+            </NavLink>
+          ))}
         </Flex>
         {isAuth ? (
           <Flex>

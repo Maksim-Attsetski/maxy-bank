@@ -5,17 +5,18 @@ import { cls } from '../utils';
 
 export interface ICardProps extends HTMLMotionProps<'div'> {
   withScale?: boolean;
+  withoutBg?: boolean;
 }
 
-const card = 'p-5 rounded-lg shadow-xl bg-white';
+const card = 'p-5 rounded-lg bg-white shadow-xl';
 const scale = ' cursor-pointer';
 const common = ` cursor-default`;
 
-const Card: FC<ICardProps> = ({ withScale = true, ...props }) => {
+const Card: FC<ICardProps> = ({ withScale = true, withoutBg = false, ...props }) => {
   return (
     <motion.div
       {...props}
-      className={cls(card, withScale ? scale : common, props?.className ?? '')}
+      className={cls(withScale ? scale : common, props?.className ?? '', withoutBg ? '' : card)}
       whileHover={withScale ? { scale: 1.05 } : undefined}
     />
   );

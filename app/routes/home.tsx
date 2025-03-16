@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Route } from './+types/home';
-import { Accordion, Appear, Flex } from 'app/shared';
+import { Accordion, Appear, Card, Flex } from 'app/shared';
 import { motion } from 'framer-motion';
 import { useFaq } from 'app/entities/info';
 
@@ -97,7 +97,7 @@ export default function Home() {
       <Accordion childrenKey={'qau'} title={'Часто задаваемые вопросы'}>
         {faq.map(({ questions, description, title }) => (
           <>
-            <Accordion childrenKey={title} title={title} key={title}>
+            <Accordion withoutBg childrenKey={title} title={title} key={title}>
               <p className="font-medium mb-2">{description}</p>
               <Flex className="flex-col items-start">
                 {questions.map((item, inx) => (
