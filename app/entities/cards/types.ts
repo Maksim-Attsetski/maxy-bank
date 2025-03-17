@@ -1,5 +1,6 @@
 import type { TStatus } from 'app/shared';
 import { UserDto, type IUser } from '../users';
+import { BankAccountDto, type IBankAccount } from '../bank-accounts';
 
 export interface ICard {
   id: string;
@@ -15,15 +16,6 @@ export interface ICard {
   currencies: string[]; // Валюты, в которых доступна карта
   limit: number | null; // Лимит по карте (null, если безлимитная)
   is_virtual: boolean;
-}
-export interface IBankAccount<A = string, C = string> {
-  id: string;
-  uid: string;
-  created_at: string;
-
-  author_id: A;
-  card_id: C;
-  number: number;
 }
 export interface IUserCard<A = string, B = string> {
   id: string;
@@ -53,8 +45,7 @@ export interface ICardRequest<C = string, U = string> {
   user_id: U;
 }
 
-export type TFullBankAccount = IBankAccount<IUser, IUserCard>;
-export type TFullUserCard = IUserCard<IUser, TFullBankAccount>;
+export type TFullUserCard = IUserCard<IUser, IBankAccount>;
 export type TFullCardRequest = ICardRequest<ICard>;
 
 export const CardDto: ICard = {
@@ -72,8 +63,6 @@ export const CardDto: ICard = {
   limit: 0,
 };
 
-export const BankAccountDto = {} as TFullBankAccount;
-
 export const UserCardDto: TFullUserCard = {
   id: '',
   uid: '',
@@ -86,8 +75,15 @@ export const UserCardDto: TFullUserCard = {
   name: '',
   card_bg: 1,
   pin: 0,
+  bank_account_id: {
+    author_id: '',
+    card_id: '',
+    created_at: '',
+    id: '',
+    number: 1,
+    uid: '',
+  },
   author_id: UserDto,
-  bank_account_id: BankAccountDto,
 };
 
 export const CardRequestDto = {
