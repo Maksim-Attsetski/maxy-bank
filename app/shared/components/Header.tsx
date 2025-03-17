@@ -34,27 +34,29 @@ const Header: FC = () => {
             </NavLink>
           ))}
         </Flex>
-        {isAuth ? (
-          <Flex>
-            <Flex>
-              <p className="font-medium text-lg">{user?.first_name}</p>
-              <Button variant="primary" to={routes.profile} className="py-2 px-2 rounded-full">
-                <FaRegUser />
+        <Flex>
+          {isAuth ? (
+            <>
+              <Flex>
+                <p className="font-medium text-lg">{user?.first_name}</p>
+                <Button variant="primary" to={routes.profile} className="py-2 px-2 rounded-full">
+                  <FaRegUser />
+                </Button>
+              </Flex>
+              <Button onClick={onLogout} to="/">
+                Выйти
               </Button>
-            </Flex>
-            <Button onClick={onLogout} to="/">
-              Выйти
-            </Button>
-          </Flex>
-        ) : (
-          <Flex>
-            <Button onClick={onToggleTheme}>{theme}</Button>
-            <Button to={authRoutes.signup} variant="primary">
-              Регистрация
-            </Button>
-            <Button to={authRoutes.login}>Войти</Button>
-          </Flex>
-        )}
+            </>
+          ) : (
+            <>
+              <Button to={authRoutes.signup} variant="primary">
+                Регистрация
+              </Button>
+              <Button to={authRoutes.login}>Войти</Button>
+            </>
+          )}
+          <Button onClick={onToggleTheme}>{theme}</Button>
+        </Flex>
       </Flex>
     </header>
   );

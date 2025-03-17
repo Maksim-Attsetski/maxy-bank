@@ -27,7 +27,10 @@ export const useUserCards = (load: boolean = false) => {
     const cardInState = userCards.find((c) => c.uid === uid);
     if (cardInState) return cardInState;
 
-    const response = await onGetSelect(convertDto(UserCardDto)).eq('uid', uid).single();
+    const select = convertDto(UserCardDto);
+    console.log(select);
+
+    const response = await onGetSelect(select).eq('uid', uid).single();
 
     if (response.error) throw new Error(response.error?.message);
     return response.data as unknown as TFullUserCard;

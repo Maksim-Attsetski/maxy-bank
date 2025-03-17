@@ -4,7 +4,7 @@ import {
   useUserCards,
   type TFullUserCard,
 } from 'app/entities/cards';
-import { Button, Card, cardsImagesUrl, CardUtils, Flex, Input, Modal } from 'app/shared';
+import { Button, Card, cardsImagesUrl, CardUtils, Flex, Input, Modal, routes } from 'app/shared';
 import { useState, useEffect } from 'react';
 import type { Route } from '../+types/home';
 import { useParams } from 'react-router';
@@ -89,60 +89,66 @@ export default function CardItem() {
       <br />
       <br />
       {cardItem ? (
-        <Card withScale={false}>
-          <Flex className="justify-self-center">
-            <h3 className="text-center">{cardItem.name}</h3>
-            <p>(до {cardItem.expire_at})</p>
-          </Flex>
-          <Flex className="justify-between">
-            <div>
-              <div className="relative">
-                <img
-                  className="w-56 md:w-sm lg:w-lg rounded-2xl"
-                  src={cardsImagesUrl + cardItem?.card_bg + '.jpg'}
-                  alt="bg"
-                />
-                <Card className="absolute bottom-3 left-3 py-2">
-                  <p>{CardUtils.maskLastDigits(cardItem.card_number)}</p>
-                </Card>
-              </div>
-            </div>
-            <Flex className="flex-col items-end">
-              <h5>
-                Владелец: {cardItem?.author_id?.first_name} {cardItem?.author_id?.last_name}
-              </h5>
-              {cardItem.bank_account_id ? (
-                <>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto rem
-                    accusantium ratione? Unde nam quidem suscipit mollitia sit alias adipisci.
-                  </p>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto rem
-                    accusantium ratione? Unde nam quidem suscipit mollitia sit alias adipisci.
-                  </p>
-                </>
-              ) : (
-                <Button
-                  variant="primary"
-                  title={cardItem?.blocked_at ? 'Карта заблокирована' : ''}
-                  disabled={!!cardItem?.blocked_at}
-                >
-                  Оформить счёт
-                </Button>
-              )}
-              <Button onClick={() => setChangePincodeModal(true)}>Сменить pin код</Button>
-              <Button onClick={() => setChangeNameModal(true)}>Сменить имя</Button>
-              {cardItem?.blocked_at ? (
-                <Button variant="primary" onClick={onUnblockCard}>
-                  Разблокировать
-                </Button>
-              ) : (
-                <Button onClick={onBlockCard}>Заблокировать</Button>
-              )}
+        <>
+          <Card withScale={false}>
+            <Flex className="justify-self-center">
+              <h3 className="text-center">{cardItem.name}</h3>
+              <p>(до {cardItem.expire_at})</p>
             </Flex>
-          </Flex>
-        </Card>
+            <Flex className="justify-between">
+              <div>
+                <div className="relative">
+                  <img
+                    className="w-56 md:w-sm lg:w-lg rounded-2xl"
+                    src={cardsImagesUrl + cardItem?.card_bg + '.jpg'}
+                    alt="bg"
+                  />
+                  <Card className="absolute bottom-3 left-3 py-2">
+                    <p>{CardUtils.maskLastDigits(cardItem.card_number)}</p>
+                  </Card>
+                </div>
+              </div>
+              <Flex className="flex-col items-end">
+                <h5>
+                  Владелец: {cardItem?.author_id?.first_name} {cardItem?.author_id?.last_name}
+                </h5>
+                {cardItem.bank_account_id ? (
+                  <>
+                    <p>Номер счета {cardItem.bank_account_id?.number}</p>
+                    <p>Баланс {cardItem.bank_account_id?.balance}</p>
+                  </>
+                ) : (
+                  <Button
+                    variant="primary"
+                    title={cardItem?.blocked_at ? 'Карта заблокирована' : ''}
+                    disabled={!!cardItem?.blocked_at}
+                  >
+                    Оформить счёт
+                  </Button>
+                )}
+                <Button onClick={() => setChangePincodeModal(true)}>Сменить pin код</Button>
+                <Button onClick={() => setChangeNameModal(true)}>Сменить имя</Button>
+                {cardItem?.blocked_at ? (
+                  <Button variant="primary" onClick={onUnblockCard}>
+                    Разблокировать
+                  </Button>
+                ) : (
+                  <Button onClick={onBlockCard}>Заблокировать</Button>
+                )}
+              </Flex>
+            </Flex>
+          </Card>
+          {cardItem?.bank_account_id && (
+            <>
+              <br />
+              <Card withScale={false}>
+                <Button variant="primary" to={'/' + routes.money_transfer + '/' + cardItem?.uid}>
+                  Перевести
+                </Button>
+              </Card>
+            </>
+          )}
+        </>
       ) : (
         <>
           <p>Нет карты с id {paramsId}</p>
