@@ -8,13 +8,18 @@ export default [
     index('routes/home.tsx'),
     route(routes.about, 'routes/about.tsx'),
     route(routes.support, 'routes/support.tsx'),
-    route(routes.currency_exchange, 'routes/currency_exchange.tsx'),
+    route(routes.currency_exchange, 'routes/currency-exchange.tsx'),
     route(routes.deposits, 'routes/deposits.tsx'),
 
     ...prefix('cards', [
       index('routes/cards/index.tsx'),
       route('add', 'routes/cards/add.tsx'),
       route(':uid', 'routes/cards/card.tsx'),
+    ]),
+
+    ...prefix('money-transfer', [
+      index('routes/money-transfer/index.tsx'),
+      route(':uid', 'routes/money-transfer/from.tsx'),
     ]),
 
     ...prefix('profile', [

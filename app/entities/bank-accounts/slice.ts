@@ -8,7 +8,7 @@ interface IState {
   setBankAccounts: (data: IBankAccount[]) => void;
 }
 
-export const useInfoStore = create<IState>((set) => ({
+export const useBankAccountStore = create<IState>((set) => ({
   bankAccounts: [],
 
   setBankAccounts: (acc) => set({ bankAccounts: [...acc] }),

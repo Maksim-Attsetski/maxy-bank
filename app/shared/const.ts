@@ -15,8 +15,9 @@ export const routes = {
   about: 'about',
   support: 'support',
   cards: 'cards',
+  money_transfer: 'money-transfer',
   add_card: 'cards/add',
-  currency_exchange: 'currency_exchange',
+  currency_exchange: 'currency-exchange',
   deposits: 'deposits',
 };
 

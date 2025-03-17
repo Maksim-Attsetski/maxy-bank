@@ -82,6 +82,7 @@ export const UserCardDto: TFullUserCard = {
     id: '',
     number: 1,
     uid: '',
+    balance: 0,
   },
   author_id: UserDto,
 };

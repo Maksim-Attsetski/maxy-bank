@@ -8,7 +8,8 @@ export interface IBankAccount<A = string, C = string> {
 
   author_id: A;
   card_id: C;
-  number: number;
+  number: string;
+  balance: number;
 }
 
 export type TFullBankAccount = IBankAccount<IUser, IUserCard>;
@@ -18,6 +19,6 @@ export const BankAccountDto = {
   card_id: '',
   created_at: '',
   id: '',
-  number: 1,
+  number: '1',
   uid: '',
 } as unknown as IBankAccount;
