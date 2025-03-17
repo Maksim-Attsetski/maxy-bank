@@ -27,7 +27,11 @@ export default function Cards() {
             {cardsRequests.map((req) => (
               <CardWithAction
                 key={req.id}
-                action={<div onClick={() => onDeleteCardRequest(req.id, 'id')}>🗑️</div>}
+                action={
+                  req.status === 'PENDING' && (
+                    <div onClick={() => onDeleteCardRequest(req.id, 'id')}>🗑️</div>
+                  )
+                }
               >
                 <h3>{req.card_id?.name}</h3>
                 <p>{req.status}</p>
