@@ -1,5 +1,4 @@
 import { reactRouter } from '@react-router/dev/vite';
-import tailwindcss from '@tailwindcss/vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { defineConfig, loadEnv } from 'vite';
@@ -12,7 +11,7 @@ export default defineConfig(({ mode }) => {
     ssr: {
       noExternal: ['@supabase/supabase-js'], // 👈 Исключаем Supabase из SSR
     },
-    plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+    plugins: [reactRouter(), tsconfigPaths()],
     define: {
       'process.env.VITE_SUPABASE_URL': JSON.stringify(env.VITE_SUPABASE_URL),
       'process.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(env.VITE_SUPABASE_ANON_KEY),

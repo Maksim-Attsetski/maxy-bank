@@ -1,9 +1,13 @@
-import React, { type FC } from 'react';
+import { Layout, theme } from 'antd';
+import { type FC } from 'react';
 import { Link } from 'react-router';
 
 const Footer: FC = () => {
+  const {
+    token: { colorText, colorBgBase },
+  } = theme.useToken();
   return (
-    <footer>
+    <Layout.Footer style={{ backgroundColor: colorBgBase, color: colorText }}>
       <p>Maxy Bank</p>
       <p>Инфо о сайте</p>
       <Link className="text-text" to={'/about'}>
@@ -12,7 +16,7 @@ const Footer: FC = () => {
       <Link className="text-text" to={'/support'}>
         Поддержка
       </Link>
-    </footer>
+    </Layout.Footer>
   );
 };
 

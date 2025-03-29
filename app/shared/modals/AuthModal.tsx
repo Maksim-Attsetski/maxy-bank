@@ -8,8 +8,9 @@ import {
 } from 'react';
 
 import { useAuth } from 'app/entities/auth';
-import { Button, Flex, Modal } from '../ui';
 import { authRoutes } from '../const';
+import { Button, Modal, Row } from 'antd';
+import { Link } from 'react-router';
 
 const AuthModal: FC<PropsWithChildren> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,16 +23,16 @@ const AuthModal: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div onClick={onCheckIsAuth}>
-      <Modal open={isOpen} setOpen={setIsOpen}>
+      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
         <h4>Чтобы продолжить</h4>
         <h4>Вам необходимо авторизоваться</h4>
         <br />
-        <Flex className="ml-auto">
+        <Row className="ml-auto">
           <Button onClick={() => setIsOpen(false)}>Закрыть</Button>
-          <Button variant="primary" to={'/' + authRoutes.signup}>
-            Перейти
+          <Button>
+            <Link to={'/' + authRoutes.signup}>Перейти</Link>
           </Button>
-        </Flex>
+        </Row>
       </Modal>
       <div className={isAuth ? '' : 'pointer-events-none'}>{children}</div>
     </div>

@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
 import { useCards, useCardsRequests, type ICard, type ICardRequest } from 'app/entities/cards';
-import { Button, Card, Flex, Input, Modal } from 'app/shared';
 import { useUsers } from 'app/entities/users';
 
 import type { Route } from './+types/add';
 import { useAuth } from 'app/entities/auth';
 import { AuthModal } from 'app/shared/modals';
+import { Button, Card, Col, Input, Modal } from 'antd';
+import { Link } from 'react-router';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -39,20 +40,24 @@ export default function AddNewCard() {
 
   return (
     <div className="container">
-      <Modal open={requestModalOpen} setOpen={setRequestModalOpen}>
+      <Modal open={requestModalOpen} onClose={() => setRequestModalOpen(false)}>
         <h2>Вы уверены?</h2>
         <br />
-        <Input value={description} onChangeText={setDescription} placeholder="Описание" />
+        <Input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Описание"
+        />
         <br />
         <Button onClick={onMakeNewRequest}>Отправить</Button>
       </Modal>
-      <Button to={-1}>Назад</Button>
+      <Link to={'../'}>Назад</Link>
       <br />
       <br />
       <h3>Выберите карту для оформления</h3>
       <br />
       <AuthModal>
-        <Flex className="flex-col">
+        <Col>
           {cards?.map((card) => (
             <Card
               onClick={() => {
@@ -64,7 +69,7 @@ export default function AddNewCard() {
               <h5>{card?.name}</h5>
             </Card>
           ))}
-        </Flex>
+        </Col>
       </AuthModal>
     </div>
   );

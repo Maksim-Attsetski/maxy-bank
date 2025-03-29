@@ -1,38 +1,37 @@
-import { useEffect, useState } from 'react';
-
 export type TTheme = 'light' | 'dark';
 
-export const useTheme = (check?: boolean) => {
-  const [theme, setTheme] = useState<TTheme>('light');
+import { useEffect } from 'react';
+import { create } from 'zustand';
 
-  function onSetTheme(themeName: TTheme) {
-    document.documentElement.setAttribute('data-theme', themeName);
-    localStorage.setItem('theme', themeName);
-    setTheme(themeName);
-  }
+interface IState {
+  theme: TTheme;
+
+  setTheme: (data?: TTheme) => void;
+  setDefaultTheme: () => void;
+}
+
+export const useThemeStore = create<IState>((set) => ({
+  theme: 'light',
+
+  setTheme: (value) =>
+    set((state) => {
+      const newValue = (value ?? state.theme === 'light') ? 'dark' : 'light';
+
+      localStorage.setItem('theme', newValue);
+      return { theme: newValue };
+    }),
+  setDefaultTheme: () => set(() => ({ theme: localStorage.getItem('theme') as TTheme })),
+}));
+
+export const useTheme = (check?: boolean) => {
+  const { theme, setTheme, setDefaultTheme } = useThemeStore();
 
   function onToggleTheme() {
-    onSetTheme(theme === 'dark' ? 'light' : 'dark');
-  }
-
-  function onCheckTheme() {
-    const theme = localStorage.getItem('theme');
-    if (theme) {
-      onSetTheme(theme as TTheme);
-      return;
-    }
-
-    const prefersLightTheme = window.matchMedia('(prefers-color-scheme: light)');
-    if (prefersLightTheme.matches) {
-      onSetTheme('light');
-      return;
-    }
-
-    onSetTheme('dark');
+    setTheme();
   }
 
   useEffect(() => {
-    if (check) onCheckTheme();
+    if (check) setDefaultTheme();
   }, [check]);
 
   return { theme, onToggleTheme };

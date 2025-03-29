@@ -10,7 +10,7 @@ export interface IUser {
   gender: TUserGender;
   type: TUserType;
   avatar: string | null;
-  updated_at: string;
+  updated_at: string | null;
 }
 
 export interface IUserAddress {

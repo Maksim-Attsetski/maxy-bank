@@ -1,7 +1,11 @@
-import { Button, Input } from 'app/shared';
+import { authRoutes } from 'app/shared';
 import type { Route } from './+types/home';
-import { Formik } from 'formik';
 import { supabase } from 'app/shared/utils';
+
+import loginSvg from 'app/assets/login.svg';
+import { NavLink } from 'react-router';
+
+import { Form, Input, Button, Row } from 'antd';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,13 +14,27 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-interface IAuthData {
+interface IForm {
   email: string;
   password: string;
 }
 
+// const validateForm = (values: IForm): FormikErrors<IForm> => {
+//   const errors: IForm = { email: '', password: '' };
+//   if (!values.email) {
+//     errors.email = 'Обязательно к заполнению';
+//   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+//     errors.email = 'Введите валидный адрес';
+//   }
+
+//   if (!values.password) {
+//     errors.password = 'Обязательно к заполнению';
+//   }
+//   return errors;
+// };
+
 export default function Login() {
-  const onSubmit = async (values: IAuthData) => {
+  const onSubmit = async (values: IForm) => {
     try {
       console.log('submit');
       const res = await supabase.auth.signInWithPassword(values);
@@ -27,9 +45,11 @@ export default function Login() {
       }
 
       if (res?.data?.user) {
-        const { user, session } = res.data;
-
-        const userData = await supabase.from('users').select('*').eq('uid', user?.id).single();
+        const userData = await supabase
+          .from('users')
+          .select('*')
+          .eq('uid', res.data?.user?.id)
+          .single();
         if (userData.data) {
           console.log(userData.data);
         }
@@ -42,62 +62,44 @@ export default function Login() {
   return (
     <div className="layout">
       <div className="container">
+        <br />
         <h2>Авторизация</h2>
         <br />
-        <Button to={'/'}>Назад</Button>
-        <br />
-        <br />
-        <Formik
-          initialValues={{ email: '', password: '' }}
-          validate={(values) => {
-            const errors: { email?: string } = {};
-            if (!values.email) {
-              errors.email = 'Обязательно к заполнению';
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-              errors.email = 'Введите валидный адрес';
-            }
-            return errors;
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            onSubmit(values);
-            setSubmitting(false);
-          }}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-            /* and other goodies */
-          }) => (
-            <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-              <Input
-                type="email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-                placeholder="E-mail"
-              />
-              <p>{errors.email && touched.email && errors.email}</p>
-              <Input
-                type="password"
-                name="password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-                placeholder="Пароль"
-              />
-              <p>{errors.password && touched.password && errors.password}</p>
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
-                Продолжить
-              </Button>
-            </form>
-          )}
-        </Formik>
+        <Row className="justify-between flex-col sm:flex-row">
+          <Form
+            initialValues={{ email: '', password: '' }}
+            // onSubmit={onSubmit}
+          >
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="E-mail"
+                />
+                <Input
+                  type="password"
+                  name="password"
+                  placeholder="Пароль"
+                />
+                <Button className="flex-1/2">
+                  Назад
+                </Button>
+                <Button
+                  className="flex-1/2"
+                >
+                  Продолжить
+                </Button>
+                {/* </Flex> */}
+                <hr className="mt-2 w-3/4 mx-auto" />
+                <p className="text-center text-lg">
+                  Нет аккаунта?
+                  <NavLink className="text-primary ml-0.5" to={'/' + authRoutes.signup}>
+                    Перейти
+                  </NavLink>
+                </p>
+          </Form>
+
+          <img className="w-1/2 sm:w-1/3" src={loginSvg} />
+        </Row>
       </div>
     </div>
   );
