@@ -4,10 +4,10 @@ import { Link } from 'react-router';
 
 const Footer: FC = () => {
   const {
-    token: { colorText, colorBgBase },
+    token: { colorText, colorBgLayout },
   } = theme.useToken();
   return (
-    <Layout.Footer style={{ backgroundColor: colorBgBase, color: colorText }}>
+    <Layout.Footer style={{ backgroundColor: colorBgLayout, color: colorText }}>
       <p>Maxy Bank</p>
       <p>Инфо о сайте</p>
       <Link className="text-text" to={'/about'}>

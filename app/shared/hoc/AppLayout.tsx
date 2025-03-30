@@ -8,7 +8,7 @@ import { Divider, Layout, theme } from 'antd';
 
 const AppLayout: FC = () => {
   const {
-    token: { colorBgBase },
+    token: { colorBgLayout },
   } = theme.useToken();
 
   return (
@@ -17,7 +17,7 @@ const AppLayout: FC = () => {
       <Layout.Content
         style={{
           padding: '12px 24px',
-          background: colorBgBase,
+          backgroundColor: colorBgLayout,
           minHeight: '100%',
         }}
       >

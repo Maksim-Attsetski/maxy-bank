@@ -10,3 +10,15 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+input:focus {
+  box-shadow: none !important;
+}
+
+.ant-col.ant-form-item-control {
+  flex: 1 1 100%;
+} 
+
+.ant-form-item {
+  margin-bottom: 8px;
+}

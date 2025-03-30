@@ -2,8 +2,6 @@ import { type RouteConfig, index, layout, prefix, route } from '@react-router/de
 import { authRoutes, routes } from './shared';
 
 export default [
-  route(authRoutes.signup, 'routes/signup.tsx'),
-  route(authRoutes.login, 'routes/login.tsx'),
   layout('shared/hoc/AppLayout.tsx', [
     index('routes/home.tsx'),
     route(routes.about, 'routes/about.tsx'),
@@ -26,5 +24,10 @@ export default [
       index('routes/profile/private_cabinet.tsx'),
       route(':uid', 'routes/profile/profile.tsx'),
     ]),
+  ]),
+
+  layout('shared/hoc/AuthLayout.tsx', [
+    route(authRoutes.signup, 'routes/signup.tsx'),
+    route(authRoutes.login, 'routes/login.tsx'),
   ]),
 ] satisfies RouteConfig;

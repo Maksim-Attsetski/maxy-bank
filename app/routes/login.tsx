@@ -5,7 +5,8 @@ import { supabase } from 'app/shared/utils';
 import loginSvg from 'app/assets/login.svg';
 import { NavLink } from 'react-router';
 
-import { Form, Input, Button, Row } from 'antd';
+import { Form, Input, Button, Row, Typography, Image, Col } from 'antd';
+import { useUsers } from 'app/entities/users';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -34,6 +35,7 @@ interface IForm {
 // };
 
 export default function Login() {
+  const { onGetUser } = useUsers();
   const onSubmit = async (values: IForm) => {
     try {
       console.log('submit');
@@ -45,14 +47,7 @@ export default function Login() {
       }
 
       if (res?.data?.user) {
-        const userData = await supabase
-          .from('users')
-          .select('*')
-          .eq('uid', res.data?.user?.id)
-          .single();
-        if (userData.data) {
-          console.log(userData.data);
-        }
+        await onGetUser(res.data?.user?.id);
       }
     } catch (error) {
       console.log(error);
@@ -61,46 +56,38 @@ export default function Login() {
 
   return (
     <div className="layout">
-      <div className="container">
-        <br />
-        <h2>Авторизация</h2>
-        <br />
-        <Row className="justify-between flex-col sm:flex-row">
-          <Form
-            initialValues={{ email: '', password: '' }}
-            // onSubmit={onSubmit}
-          >
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="E-mail"
-                />
-                <Input
-                  type="password"
-                  name="password"
-                  placeholder="Пароль"
-                />
-                <Button className="flex-1/2">
-                  Назад
-                </Button>
-                <Button
-                  className="flex-1/2"
-                >
-                  Продолжить
-                </Button>
-                {/* </Flex> */}
-                <hr className="mt-2 w-3/4 mx-auto" />
-                <p className="text-center text-lg">
-                  Нет аккаунта?
-                  <NavLink className="text-primary ml-0.5" to={'/' + authRoutes.signup}>
-                    Перейти
-                  </NavLink>
-                </p>
+      <Typography.Title>Авторизация</Typography.Title>
+      <br />
+      <Row justify={'space-between'}>
+        <Col span={8}>
+          <Form initialValues={{ email: '', password: '' }} onFinish={onSubmit} name="login-form">
+            <Form.Item layout="vertical" label="Email" name="vertical" rules={[{ required: true }]}>
+              <Input type="email" placeholder="E-mail" />
+            </Form.Item>
+            <Form.Item
+              layout="vertical"
+              label="Пароль"
+              name="password"
+              rules={[{ required: true }]}
+            >
+              <Input variant="outlined" type="password" placeholder="Пароль" />
+            </Form.Item>
+            <Button>Назад</Button>
+            <Button variant="filled" style={{ backgroundColor: 'colorPrimary' }}>
+              Продолжить
+            </Button>
+            <hr className="mt-2 w-3/4 mx-auto" />
+            <Typography>
+              Нет аккаунта?
+              <NavLink to={'/' + authRoutes.signup}>Перейти</NavLink>
+            </Typography>
           </Form>
+        </Col>
 
-          <img className="w-1/2 sm:w-1/3" src={loginSvg} />
-        </Row>
-      </div>
+        <Col span={8}>
+          <Image alt="login" preview={false} src={loginSvg} />
+        </Col>
+      </Row>
     </div>
   );
 }
