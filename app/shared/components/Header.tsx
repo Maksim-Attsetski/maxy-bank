@@ -1,5 +1,5 @@
-import { type FC } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router';
+import { useMemo, type FC } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router';
 
 import { FaRegUser } from 'react-icons/fa';
 
@@ -24,15 +24,25 @@ const Header: FC = () => {
   const navigate = useNavigate();
   let location = useLocation();
 
+  const activeLink = useMemo(
+    () => headerLinks.find(({ to }) => location.pathname.includes(to)),
+    [location.pathname]
+  );
+
   return (
-    <header>
+    <header style={{ padding: '12px 20px' }}>
       <Grid container justifyContent={'space-between'}>
-        <Link to={'/'}>Maxy Bank</Link>
-        <Grid container style={{ height: 'fit-content' }} alignItems={'center'}>
+        <Typography color="primary" variant="h5">
+          <Link to={'/'}>Maxy Bank</Link>
+        </Typography>
+        <Grid container alignItems={'center'} gap={2}>
           {headerLinks.map((link) => (
-            <NavLink to={link.to} key={link.to}>
-              {link.label}
-            </NavLink>
+            <Typography
+              key={link.to}
+              color={activeLink?.to === link.to ? 'primary' : 'textPrimary'}
+            >
+              <Link to={link.to}>{link.label}</Link>
+            </Typography>
           ))}
         </Grid>
         <Grid container gap={2} alignItems={'center'}>
