@@ -1,6 +1,6 @@
 import { type FC, memo, type PropsWithChildren, type ReactNode, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Card, Row } from 'antd';
+import { Card, Grid } from '@mui/material';
 
 interface IProps extends PropsWithChildren {
   childrenKey: string;
@@ -12,7 +12,7 @@ const Accordion: FC<IProps> = ({ children, childrenKey, title, withoutBg }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Card className="overflow-hidden">
-      <Row
+      <Grid
         className="w-full cursor-pointer justify-between"
         onClick={() => setIsOpen((prev) => !prev)}
       >
@@ -20,7 +20,7 @@ const Accordion: FC<IProps> = ({ children, childrenKey, title, withoutBg }) => {
         <div className="border-primary border-2 border-solid rounded-full p-3">
           {isOpen ? '➖' : '➕'}
         </div>
-      </Row>
+      </Grid>
 
       <AnimatePresence initial={false} mode="popLayout">
         {isOpen && (

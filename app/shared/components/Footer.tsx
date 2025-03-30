@@ -1,22 +1,15 @@
-import { Layout, theme } from 'antd';
 import { type FC } from 'react';
+import { Typography } from '@mui/material';
 import { Link } from 'react-router';
 
 const Footer: FC = () => {
-  const {
-    token: { colorText, colorBgLayout },
-  } = theme.useToken();
   return (
-    <Layout.Footer style={{ backgroundColor: colorBgLayout, color: colorText }}>
-      <p>Maxy Bank</p>
-      <p>Инфо о сайте</p>
-      <Link className="text-text" to={'/about'}>
-        О нас
-      </Link>
-      <Link className="text-text" to={'/support'}>
-        Поддержка
-      </Link>
-    </Layout.Footer>
+    <footer>
+      <Typography>Maxy Bank</Typography>
+      <Typography>Инфо о сайте</Typography>
+      <Link to={'/about'}>О нас</Link>
+      <Link to={'/support'}>Поддержка</Link>
+    </footer>
   );
 };
 

@@ -1,31 +1,21 @@
 import { type FC } from 'react';
 
 import { Outlet } from 'react-router';
+import { Box, Divider } from '@mui/material';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { Divider, Layout, theme } from 'antd';
 
 const AppLayout: FC = () => {
-  const {
-    token: { colorBgLayout },
-  } = theme.useToken();
-
   return (
-    <div className="layout">
+    <Box sx={{ bgcolor: 'background.default' }} className="layout">
       <Header />
-      <Layout.Content
-        style={{
-          padding: '12px 24px',
-          backgroundColor: colorBgLayout,
-          minHeight: '100%',
-        }}
-      >
+      <main style={{ padding: '12px 24px', minHeight: '100%' }}>
         <Outlet />
-      </Layout.Content>
+      </main>
       <Divider style={{ margin: 0 }} />
       <Footer />
-    </div>
+    </Box>
   );
 };
 

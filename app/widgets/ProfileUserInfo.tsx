@@ -2,7 +2,7 @@ import { type FC } from 'react';
 
 import { useUsers } from 'app/entities/users';
 import { avatarsImagesUrl } from 'app/shared';
-import { Card } from 'antd';
+import { Card } from '@mui/material';
 
 const ProfileUserInfo: FC = () => {
   const { user } = useUsers();

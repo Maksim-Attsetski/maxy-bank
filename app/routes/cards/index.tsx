@@ -2,7 +2,7 @@ import { BankCard, useCards, useCardsRequests, UserCard, useUserCards } from 'ap
 import { Appear, CardApply, Empty } from 'app/shared';
 
 import type { Route } from '../+types/home';
-import { Card, Row } from 'antd';
+import { Card, Grid, Typography } from '@mui/material';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -21,10 +21,10 @@ export default function Cards() {
       {cardsRequests.length > 0 && (
         <>
           <Appear>
-            <h3>Ваши запросы на карты</h3>
+            <Typography variant="h3">Ваши запросы на карты</Typography>
           </Appear>
           <br />
-          <Row className="gap-5">
+          <Grid>
             {cardsRequests.map((req) => (
               <Card
                 key={req.id}
@@ -35,13 +35,13 @@ export default function Cards() {
                 // }
               >
                 <>
-                  <h3>{req.card_id?.name}</h3>
-                  <p>{req.status}</p>
+                  <Typography variant="h3">{req.card_id?.name}</Typography>
+                  <Typography>{req.status}</Typography>
                 </>
               </Card>
             ))}
             <CardApply />
-          </Row>
+          </Grid>
         </>
       )}
       <br />
@@ -51,12 +51,12 @@ export default function Cards() {
             <h3>Ваши карты</h3>
           </Appear>
           <br />
-          <Row className="gap-5">
+          <Grid gap={3}>
             {userCards.map((card) => (
               <UserCard card={card} key={card.name} />
             ))}
             <CardApply />
-          </Row>
+          </Grid>
         </>
       ) : (
         <Empty title="У вас нет карт">
@@ -69,13 +69,13 @@ export default function Cards() {
       </Appear>
 
       <br />
-      <Row className="gap-5 flex-wrap">
+      <Grid flexWrap={'wrap'} gap={3}>
         {cards.map((card) => (
           <div key={card.name} className="flex-1/3">
             <BankCard card={card} />
           </div>
         ))}
-      </Row>
+      </Grid>
     </div>
   );
 }

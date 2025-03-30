@@ -8,7 +8,7 @@ import { cardsImagesUrl, CardUtils, routes } from 'app/shared';
 import { useState, useEffect } from 'react';
 import type { Route } from '../+types/home';
 import { Link, useParams } from 'react-router';
-import { Button, Card, Col, Row } from 'antd';
+import { Button, Card, Grid, Typography } from '@mui/material';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -92,11 +92,11 @@ export default function CardItem() {
       {cardItem ? (
         <>
           <Card>
-            <Row className="justify-self-center">
-              <h3 className="text-center">{cardItem.name}</h3>
-              <p>(до {cardItem.expire_at})</p>
-            </Row>
-            <Row className="justify-between">
+            <Grid justifySelf={'center'}>
+              <Typography textAlign={'center'}>{cardItem.name}</Typography>
+              <Typography>(до {cardItem.expire_at})</Typography>
+            </Grid>
+            <Grid justifyContent={'space-between'}>
               <div>
                 <div className="relative">
                   <img
@@ -109,14 +109,14 @@ export default function CardItem() {
                   </Card>
                 </div>
               </div>
-              <Col className="flex-col items-end">
-                <h5>
+              <Grid direction={'column'} alignItems={'end'}>
+                <Typography variant="h5">
                   Владелец: {cardItem?.author_id?.first_name} {cardItem?.author_id?.last_name}
-                </h5>
+                </Typography>
                 {cardItem.bank_account_id ? (
                   <>
-                    <p>Номер счета {cardItem.bank_account_id?.number}</p>
-                    <p>Баланс {cardItem.bank_account_id?.balance}</p>
+                    <Typography>Номер счета {cardItem.bank_account_id?.number}</Typography>
+                    <Typography>Баланс {cardItem.bank_account_id?.balance}</Typography>
                   </>
                 ) : (
                   <Button
@@ -133,8 +133,8 @@ export default function CardItem() {
                 ) : (
                   <Button onClick={onBlockCard}>Заблокировать</Button>
                 )}
-              </Col>
-            </Row>
+              </Grid>
+            </Grid>
           </Card>
           {cardItem?.bank_account_id && (
             <>

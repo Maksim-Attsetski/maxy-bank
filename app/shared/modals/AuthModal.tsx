@@ -9,7 +9,7 @@ import {
 
 import { useAuth } from 'app/entities/auth';
 import { authRoutes } from '../const';
-import { Button, Modal, Row } from 'antd';
+import { Button, Modal, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router';
 
 const AuthModal: FC<PropsWithChildren> = ({ children }) => {
@@ -24,17 +24,19 @@ const AuthModal: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div onClick={onCheckIsAuth}>
       <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-        <h4>Чтобы продолжить</h4>
-        <h4>Вам необходимо авторизоваться</h4>
-        <br />
-        <Row className="ml-auto">
-          <Button onClick={() => setIsOpen(false)}>Закрыть</Button>
-          <Button>
-            <Link to={'/' + authRoutes.signup}>Перейти</Link>
-          </Button>
-        </Row>
+        <>
+          <Typography variant="h4">Чтобы продолжить</Typography>
+          <Typography variant="h4">Вам необходимо авторизоваться</Typography>
+          <br />
+          <Grid className="ml-auto">
+            <Button onClick={() => setIsOpen(false)}>Закрыть</Button>
+            <Button>
+              <Link to={'/' + authRoutes.signup}>Перейти</Link>
+            </Button>
+          </Grid>
+        </>
       </Modal>
-      <div className={isAuth ? '' : 'pointer-events-none'}>{children}</div>
+      <div style={{ pointerEvents: isAuth ? 'all' : 'none' }}>{children}</div>
     </div>
   );
 };

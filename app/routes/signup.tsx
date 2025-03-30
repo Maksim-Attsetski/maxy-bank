@@ -5,7 +5,7 @@ import type { Route } from './+types/home';
 import { supabase } from 'app/shared/utils';
 import type { IUser } from 'app/entities/users';
 
-import { Form, Input, Button, Row } from 'antd';
+import { Input, Button, Grid, Typography, Divider } from '@mui/material';
 
 import loginSvg from 'app/assets/login.svg';
 
@@ -74,7 +74,7 @@ export default function Signup() {
         <br />
         <h2>Регистрация</h2>
         <br />
-        <Row className="justify-between flex-col sm:flex-row">
+        <Grid container>
           {/* errors.email = isEmailValid(values.email);
               errors.first_name = isNameValid(values.first_name);
               errors.last_name = isNameValid(values.last_name); */}
@@ -84,7 +84,7 @@ export default function Signup() {
                 values,
                 errors
               ); */}
-          <Form>
+          <form>
             <Input type="email" name="email" placeholder="E-mail" />
             <Input type="password" name="password" placeholder="Пароль" />
             <Input name="first_name" placeholder="Имя" />
@@ -99,25 +99,21 @@ export default function Signup() {
               ]}
               name="gender"
             /> */}
-            <Row>
-              <Button className="flex-1/4" >
-                Назад
-              </Button>
-              <Button className="flex-1/2" >
-                Продолжить
-              </Button>
-            </Row>
-            <hr className="mt-2 w-3/4 mx-auto" />
-            <p className="text-center text-lg">
+            <Grid container>
+              <Button className="flex-1/4">Назад</Button>
+              <Button className="flex-1/2">Продолжить</Button>
+            </Grid>
+            <Divider />
+            <Typography>
               Нет аккаунта?
               <NavLink className="text-primary ml-0.5" to={'/' + authRoutes.signup}>
                 Перейти
               </NavLink>
-            </p>
-          </Form>
+            </Typography>
+          </form>
 
           <img className="w-1/2 sm:w-1/3" src={loginSvg} />
-        </Row>
+        </Grid>
       </div>
     </div>
   );

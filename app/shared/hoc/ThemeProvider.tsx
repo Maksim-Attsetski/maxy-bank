@@ -1,49 +1,60 @@
-import { ConfigProvider, theme as antTheme } from 'antd';
-import { useEffect, useState, type FC, type PropsWithChildren } from 'react';
-import { useTheme } from '../hooks';
-import type { AliasToken } from 'antd/es/theme/internal';
+import {
+  createTheme,
+  ThemeProvider as MaterialProvider,
+  type Components,
+  type CssVarsTheme,
+  type PaletteOptions,
+  type Theme,
+} from '@mui/material';
+import { useMemo, type FC, type PropsWithChildren } from 'react';
 
-const defaultData: Record<'light' | 'dark', Partial<AliasToken>> = {
-  light: {
-    borderRadius: 8,
-    colorPrimary: '#5e5cf9',
-    colorBgLayout: '#eee',
-    colorBgBase: '#fff',
-    colorText: '#333',
-  },
-  dark: {
-    borderRadius: 8,
-    colorPrimary: '#7b66e8',
-    colorBgLayout: '#333',
-    colorBgBase: '#111',
-    colorText: '#eee',
-  },
+import { useTheme } from '../hooks';
+
+const getPalette = (theme: 'light' | 'dark'): PaletteOptions =>
+  theme === 'light'
+    ? {
+        text: {
+          primary: '#333',
+        },
+        primary: {
+          main: '#5e5cf9',
+        },
+        background: {
+          default: '#eee',
+          paper: '#fff',
+        },
+      }
+    : {
+        text: {
+          primary: '#e9e9e9',
+        },
+        primary: {
+          main: '#7b66e8',
+        },
+        background: {
+          default: '#333',
+          paper: '#11111140',
+        },
+      };
+
+const componentsTheme: Components<Omit<Theme, 'components' | 'palette'> & CssVarsTheme> = {
+  MuiCard: { styleOverrides: { root: { borderRadius: 8, padding: '12px' } } },
+  MuiTypography: { defaultProps: { color: 'text.primary' } },
 };
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const { theme } = useTheme(true);
 
-  const [data, setData] = useState<Partial<AliasToken>>(defaultData[theme]);
-
-  useEffect(() => {
-    setData(defaultData[theme]);
-  }, [theme]);
-
-  return (
-    <ConfigProvider
-      theme={{
-        token: { ...data },
-        hashed: true,
-        components: {
-          Card: { colorBorder: defaultData[theme].colorBorder },
-          Input: { colorBorder: defaultData[theme].colorBorder },
-        },
-        algorithm: [antTheme.darkAlgorithm, antTheme.compactAlgorithm],
-      }}
-    >
-      {children}
-    </ConfigProvider>
+  const themeData = useMemo(
+    () =>
+      createTheme({
+        palette: getPalette(theme),
+        components: componentsTheme,
+      }),
+    [theme]
   );
+
+  return <MaterialProvider theme={themeData}>{children}</MaterialProvider>;
 };
 
 export default ThemeProvider;

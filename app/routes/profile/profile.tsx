@@ -4,7 +4,7 @@ import { useUserDocuments, useUsers } from 'app/entities/users';
 import { useEffect, useMemo } from 'react';
 import { encode, supabase } from 'app/shared';
 import { ProfileUserInfo } from 'app/widgets';
-import { Button, Card, Form, Input } from 'antd';
+import { Button, Card, Input } from '@mui/material';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -106,14 +106,14 @@ export default function Profile() {
             <br />
           </div>
         ) : (
-          <Form className="flex flex-col gap-2">
+          <form>
             <Input name="passport_number" />
             <Input name="identification_number" />
             <Input name="issued_by" />
             <Input name="issued_at" type="datetime-local" />
             <Input name="expire_at" type="datetime-local" />
             <Button>Отправить</Button>
-          </Form>
+          </form>
         ))}
     </div>
   );

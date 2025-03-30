@@ -1,6 +1,6 @@
-import React, { type Dispatch, type FC, memo, type SetStateAction, useState } from 'react';
+import { type Dispatch, type FC, memo, type SetStateAction, useState } from 'react';
 
-import { Button, Input, Modal } from 'app/shared';
+import { Button, Input, Modal } from '@mui/material';
 import type { TFullUserCard } from '../types';
 
 interface IProps {
@@ -14,15 +14,15 @@ const ChangeNameModal: FC<IProps> = ({ card, open, setOpen, onSave }) => {
   const [pin, setPin] = useState('' + card?.pin);
 
   return (
-    <Modal open={open} setOpen={setOpen}>
+    <Modal open={open} onClose={() => setOpen(false)}>
       <>
         <h3>Изменить pin код</h3>
         <br />
-        <Input value={pin} onChangeText={setPin} />
+        <Input value={pin} onChange={(e) => setPin(e.target.value)} />
         <br />
         <br />
         <Button
-          variant="primary"
+          variant="contained"
           onClick={() => {
             onSave(pin);
             setOpen(false);

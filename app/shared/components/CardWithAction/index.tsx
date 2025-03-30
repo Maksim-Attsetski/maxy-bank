@@ -1,6 +1,6 @@
 import { type FC, memo, type ReactNode } from 'react';
 
-import { Card, type CardProps } from 'antd';
+import { Card, type CardProps } from '@mui/material';
 
 import './CardWithAction.css';
 

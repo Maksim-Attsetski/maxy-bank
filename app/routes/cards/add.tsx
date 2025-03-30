@@ -6,7 +6,7 @@ import { useUsers } from 'app/entities/users';
 import type { Route } from './+types/add';
 import { useAuth } from 'app/entities/auth';
 import { AuthModal } from 'app/shared/modals';
-import { Button, Card, Col, Input, Modal } from 'antd';
+import { Button, Card, Input, Modal } from '@mui/material';
 import { Link } from 'react-router';
 
 export function meta({}: Route.MetaArgs) {
@@ -40,16 +40,18 @@ export default function AddNewCard() {
 
   return (
     <div className="container">
-      <Modal open={requestModalOpen} onClose={() => setRequestModalOpen(false)}>
-        <h2>Вы уверены?</h2>
-        <br />
-        <Input
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Описание"
-        />
-        <br />
-        <Button onClick={onMakeNewRequest}>Отправить</Button>
+      <Modal open={requestModalOpen}>
+        <>
+          <h2>Вы уверены?</h2>
+          <br />
+          <Input
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Описание"
+          />
+          <br />
+          <Button onClick={onMakeNewRequest}>Отправить</Button>
+        </>
       </Modal>
       <Link to={'../'}>Назад</Link>
       <br />
@@ -57,7 +59,7 @@ export default function AddNewCard() {
       <h3>Выберите карту для оформления</h3>
       <br />
       <AuthModal>
-        <Col>
+        <>
           {cards?.map((card) => (
             <Card
               onClick={() => {
@@ -69,7 +71,7 @@ export default function AddNewCard() {
               <h5>{card?.name}</h5>
             </Card>
           ))}
-        </Col>
+        </>
       </AuthModal>
     </div>
   );

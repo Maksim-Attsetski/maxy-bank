@@ -5,7 +5,7 @@ import { supabase } from 'app/shared/utils';
 import loginSvg from 'app/assets/login.svg';
 import { NavLink } from 'react-router';
 
-import { Form, Input, Button, Row, Typography, Image, Col } from 'antd';
+import { Input, Button, Typography, Grid } from '@mui/material';
 import { useUsers } from 'app/entities/users';
 
 export function meta({}: Route.MetaArgs) {
@@ -56,38 +56,24 @@ export default function Login() {
 
   return (
     <div className="layout">
-      <Typography.Title>Авторизация</Typography.Title>
+      <Typography variant="h2">Авторизация</Typography>
       <br />
-      <Row justify={'space-between'}>
-        <Col span={8}>
-          <Form initialValues={{ email: '', password: '' }} onFinish={onSubmit} name="login-form">
-            <Form.Item layout="vertical" label="Email" name="vertical" rules={[{ required: true }]}>
-              <Input type="email" placeholder="E-mail" />
-            </Form.Item>
-            <Form.Item
-              layout="vertical"
-              label="Пароль"
-              name="password"
-              rules={[{ required: true }]}
-            >
-              <Input variant="outlined" type="password" placeholder="Пароль" />
-            </Form.Item>
-            <Button>Назад</Button>
-            <Button variant="filled" style={{ backgroundColor: 'colorPrimary' }}>
-              Продолжить
-            </Button>
-            <hr className="mt-2 w-3/4 mx-auto" />
-            <Typography>
-              Нет аккаунта?
-              <NavLink to={'/' + authRoutes.signup}>Перейти</NavLink>
-            </Typography>
-          </Form>
-        </Col>
+      <Grid container justifyContent={'space-between'}>
+        {/* <Form initialValues={{ email: '', password: '' }} onFinish={onSubmit} name="login-form"> */}
+        <form name="login-form">
+          <Input type="email" placeholder="E-mail" />
+          <Input type="password" placeholder="Пароль" />
+          <Button>Назад</Button>
+          <Button style={{ backgroundColor: 'colorPrimary' }}>Продолжить</Button>
+          <hr className="mt-2 w-3/4 mx-auto" />
+          <Typography>
+            Нет аккаунта?
+            <NavLink to={'/' + authRoutes.signup}>Перейти</NavLink>
+          </Typography>
+        </form>
 
-        <Col span={8}>
-          <Image alt="login" preview={false} src={loginSvg} />
-        </Col>
-      </Row>
+        <img alt="login" src={loginSvg} />
+      </Grid>
     </div>
   );
 }
