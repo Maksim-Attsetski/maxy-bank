@@ -1,11 +1,10 @@
 import { type FC, memo, type ReactNode } from 'react';
 
-import { Card } from 'app/shared/ui';
-import type { ICardProps } from 'app/shared/ui/Card';
+import { Card, type CardProps } from 'antd';
 
 import './CardWithAction.css';
 
-interface IProps extends ICardProps {
+interface IProps extends CardProps {
   action?: ReactNode;
 }
 

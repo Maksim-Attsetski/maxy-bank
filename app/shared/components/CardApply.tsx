@@ -1,9 +1,9 @@
-import React, { type FC } from 'react';
+import { type FC } from 'react';
 import { useNavigate } from 'react-router';
 
-import { Card } from '../ui';
 import { routes } from '../const';
 import { AuthModal } from '../modals';
+import { Card } from 'antd';
 
 const CardApply: FC = () => {
   const navigate = useNavigate();

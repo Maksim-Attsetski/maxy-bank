@@ -1,7 +1,8 @@
 import { BankCard, useCards, useCardsRequests, UserCard, useUserCards } from 'app/entities/cards';
-import { Appear, CardApply, CardWithAction, Empty, Flex } from 'app/shared';
+import { Appear, CardApply, Empty } from 'app/shared';
 
 import type { Route } from '../+types/home';
+import { Card, Row } from 'antd';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -23,22 +24,24 @@ export default function Cards() {
             <h3>Ваши запросы на карты</h3>
           </Appear>
           <br />
-          <Flex className="gap-5">
+          <Row className="gap-5">
             {cardsRequests.map((req) => (
-              <CardWithAction
+              <Card
                 key={req.id}
-                action={
-                  req.status === 'PENDING' && (
-                    <div onClick={() => onDeleteCardRequest(req.id, 'id')}>🗑️</div>
-                  )
-                }
+                // action={
+                //   req.status === 'PENDING' && (
+                //     <div onClick={() => onDeleteCardRequest(req.id, 'id')}>🗑️</div>
+                //   )
+                // }
               >
-                <h3>{req.card_id?.name}</h3>
-                <p>{req.status}</p>
-              </CardWithAction>
+                <>
+                  <h3>{req.card_id?.name}</h3>
+                  <p>{req.status}</p>
+                </>
+              </Card>
             ))}
             <CardApply />
-          </Flex>
+          </Row>
         </>
       )}
       <br />
@@ -48,12 +51,12 @@ export default function Cards() {
             <h3>Ваши карты</h3>
           </Appear>
           <br />
-          <Flex className="gap-5">
+          <Row className="gap-5">
             {userCards.map((card) => (
               <UserCard card={card} key={card.name} />
             ))}
             <CardApply />
-          </Flex>
+          </Row>
         </>
       ) : (
         <Empty title="У вас нет карт">
@@ -66,13 +69,13 @@ export default function Cards() {
       </Appear>
 
       <br />
-      <Flex className="gap-5 flex-wrap">
+      <Row className="gap-5 flex-wrap">
         {cards.map((card) => (
           <div key={card.name} className="flex-1/3">
             <BankCard card={card} />
           </div>
         ))}
-      </Flex>
+      </Row>
     </div>
   );
 }

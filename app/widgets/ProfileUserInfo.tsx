@@ -1,13 +1,14 @@
-import React, { type FC } from 'react';
+import { type FC } from 'react';
 
 import { useUsers } from 'app/entities/users';
-import { avatarsImagesUrl, Card } from 'app/shared';
+import { avatarsImagesUrl } from 'app/shared';
+import { Card } from 'antd';
 
 const ProfileUserInfo: FC = () => {
   const { user } = useUsers();
 
   return (
-    <Card withScale={false}>
+    <Card>
       {user?.avatar && (
         <img
           src={avatarsImagesUrl + user?.avatar}

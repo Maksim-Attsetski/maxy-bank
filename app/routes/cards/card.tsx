@@ -4,10 +4,11 @@ import {
   useUserCards,
   type TFullUserCard,
 } from 'app/entities/cards';
-import { Button, Card, cardsImagesUrl, CardUtils, Flex, Input, Modal, routes } from 'app/shared';
+import { cardsImagesUrl, CardUtils, routes } from 'app/shared';
 import { useState, useEffect } from 'react';
 import type { Route } from '../+types/home';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
+import { Button, Card, Col, Row } from 'antd';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -85,17 +86,17 @@ export default function CardItem() {
           />
         </>
       )}
-      <Button to={-1}>Назад</Button>
+      <Link to={'../'}>Назад</Link>
       <br />
       <br />
       {cardItem ? (
         <>
-          <Card withScale={false}>
-            <Flex className="justify-self-center">
+          <Card>
+            <Row className="justify-self-center">
               <h3 className="text-center">{cardItem.name}</h3>
               <p>(до {cardItem.expire_at})</p>
-            </Flex>
-            <Flex className="justify-between">
+            </Row>
+            <Row className="justify-between">
               <div>
                 <div className="relative">
                   <img
@@ -108,7 +109,7 @@ export default function CardItem() {
                   </Card>
                 </div>
               </div>
-              <Flex className="flex-col items-end">
+              <Col className="flex-col items-end">
                 <h5>
                   Владелец: {cardItem?.author_id?.first_name} {cardItem?.author_id?.last_name}
                 </h5>
@@ -119,7 +120,6 @@ export default function CardItem() {
                   </>
                 ) : (
                   <Button
-                    variant="primary"
                     title={cardItem?.blocked_at ? 'Карта заблокирована' : ''}
                     disabled={!!cardItem?.blocked_at}
                   >
@@ -129,22 +129,18 @@ export default function CardItem() {
                 <Button onClick={() => setChangePincodeModal(true)}>Сменить pin код</Button>
                 <Button onClick={() => setChangeNameModal(true)}>Сменить имя</Button>
                 {cardItem?.blocked_at ? (
-                  <Button variant="primary" onClick={onUnblockCard}>
-                    Разблокировать
-                  </Button>
+                  <Button onClick={onUnblockCard}>Разблокировать</Button>
                 ) : (
                   <Button onClick={onBlockCard}>Заблокировать</Button>
                 )}
-              </Flex>
-            </Flex>
+              </Col>
+            </Row>
           </Card>
           {cardItem?.bank_account_id && (
             <>
               <br />
-              <Card withScale={false}>
-                <Button variant="primary" to={'/' + routes.money_transfer + '/' + cardItem?.uid}>
-                  Перевести
-                </Button>
+              <Card>
+                <Link to={'/' + routes.money_transfer + '/' + cardItem?.uid}>Перевести</Link>
               </Card>
             </>
           )}

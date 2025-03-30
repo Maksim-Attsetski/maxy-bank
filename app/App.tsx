@@ -1,8 +1,9 @@
-import React, { type FC, memo, useEffect } from 'react';
+import { type FC, useEffect } from 'react';
 import { Outlet } from 'react-router';
 
 import { useAuth } from './entities/auth';
 import { supabase } from './shared/utils';
+import { ThemeProvider } from './shared/hoc';
 
 const App: FC = () => {
   const { onAuth } = useAuth();
@@ -20,7 +21,11 @@ const App: FC = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  return <Outlet />;
+  return (
+    <ThemeProvider>
+      <Outlet />
+    </ThemeProvider>
+  );
 };
 
 export default App;

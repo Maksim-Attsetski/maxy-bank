@@ -1,8 +1,6 @@
 import { type FC, memo, type PropsWithChildren, type ReactNode, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-
-import Flex from './Flex';
-import Card from './Card';
+import { Card, Row } from 'antd';
 
 interface IProps extends PropsWithChildren {
   childrenKey: string;
@@ -13,8 +11,8 @@ interface IProps extends PropsWithChildren {
 const Accordion: FC<IProps> = ({ children, childrenKey, title, withoutBg }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <Card withScale={false} withoutBg={withoutBg} className="overflow-hidden">
-      <Flex
+    <Card className="overflow-hidden">
+      <Row
         className="w-full cursor-pointer justify-between"
         onClick={() => setIsOpen((prev) => !prev)}
       >
@@ -22,7 +20,7 @@ const Accordion: FC<IProps> = ({ children, childrenKey, title, withoutBg }) => {
         <div className="border-primary border-2 border-solid rounded-full p-3">
           {isOpen ? '➖' : '➕'}
         </div>
-      </Flex>
+      </Row>
 
       <AnimatePresence initial={false} mode="popLayout">
         {isOpen && (

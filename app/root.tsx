@@ -1,9 +1,12 @@
 import { isRouteErrorResponse, Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 
+import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
+
+import MyApp from './App';
 import type { Route } from './+types/root';
-import App from './App';
 
 import './app.css';
+import { Suspense, type FC } from 'react';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -18,13 +21,18 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+const cache = createCache();
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const styleText = extractStyle(cache);
+
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
+        {styleText}
         <Links />
       </head>
       <body className="light">
@@ -62,5 +70,15 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     </main>
   );
 }
+
+const App: FC = () => {
+  return (
+    <Suspense fallback={<p>Loading</p>}>
+      <StyleProvider cache={cache}>
+        <MyApp />
+      </StyleProvider>
+    </Suspense>
+  );
+};
 
 export default App;

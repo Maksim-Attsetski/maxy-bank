@@ -2,20 +2,23 @@ import { Appear } from 'app/shared';
 import { BecomeClient, Faq } from 'app/widgets';
 
 import type { Route } from './+types/home';
+import { theme, Typography } from 'antd';
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: 'Maxy Bank' }, { name: 'description', content: 'Добро пожаловать в Maxy Bank' }];
 }
 
 export default function Home() {
+  const { token } = theme.useToken();
   return (
     <div className="container">
-      <br />
       <Appear>
-        <h2>
+        <Typography.Title level={2}>
           Добро пожаловать в{' '}
-          <span className="bg-primary py-1 px-3 text-white rounded-2xl">Maxy Bank</span>
-        </h2>
+          <Typography.Text style={{ color: token.colorPrimary, fontSize: 32 }}>
+            Maxy Bank
+          </Typography.Text>
+        </Typography.Title>
       </Appear>
       <br />
       <BecomeClient />

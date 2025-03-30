@@ -1,7 +1,12 @@
-import { Button, Input } from 'app/shared';
+import { authRoutes } from 'app/shared';
 import type { Route } from './+types/home';
-import { Formik } from 'formik';
 import { supabase } from 'app/shared/utils';
+
+import loginSvg from 'app/assets/login.svg';
+import { NavLink } from 'react-router';
+
+import { Form, Input, Button, Row, Typography, Image, Col } from 'antd';
+import { useUsers } from 'app/entities/users';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,13 +15,28 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-interface IAuthData {
+interface IForm {
   email: string;
   password: string;
 }
 
+// const validateForm = (values: IForm): FormikErrors<IForm> => {
+//   const errors: IForm = { email: '', password: '' };
+//   if (!values.email) {
+//     errors.email = 'Обязательно к заполнению';
+//   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+//     errors.email = 'Введите валидный адрес';
+//   }
+
+//   if (!values.password) {
+//     errors.password = 'Обязательно к заполнению';
+//   }
+//   return errors;
+// };
+
 export default function Login() {
-  const onSubmit = async (values: IAuthData) => {
+  const { onGetUser } = useUsers();
+  const onSubmit = async (values: IForm) => {
     try {
       console.log('submit');
       const res = await supabase.auth.signInWithPassword(values);
@@ -27,12 +47,7 @@ export default function Login() {
       }
 
       if (res?.data?.user) {
-        const { user, session } = res.data;
-
-        const userData = await supabase.from('users').select('*').eq('uid', user?.id).single();
-        if (userData.data) {
-          console.log(userData.data);
-        }
+        await onGetUser(res.data?.user?.id);
       }
     } catch (error) {
       console.log(error);
@@ -41,64 +56,38 @@ export default function Login() {
 
   return (
     <div className="layout">
-      <div className="container">
-        <h2>Авторизация</h2>
-        <br />
-        <Button to={'/'}>Назад</Button>
-        <br />
-        <br />
-        <Formik
-          initialValues={{ email: '', password: '' }}
-          validate={(values) => {
-            const errors: { email?: string } = {};
-            if (!values.email) {
-              errors.email = 'Обязательно к заполнению';
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-              errors.email = 'Введите валидный адрес';
-            }
-            return errors;
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            onSubmit(values);
-            setSubmitting(false);
-          }}
-        >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-            /* and other goodies */
-          }) => (
-            <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
-              <Input
-                type="email"
-                name="email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-                placeholder="E-mail"
-              />
-              <p>{errors.email && touched.email && errors.email}</p>
-              <Input
-                type="password"
-                name="password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-                placeholder="Пароль"
-              />
-              <p>{errors.password && touched.password && errors.password}</p>
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
-                Продолжить
-              </Button>
-            </form>
-          )}
-        </Formik>
-      </div>
+      <Typography.Title>Авторизация</Typography.Title>
+      <br />
+      <Row justify={'space-between'}>
+        <Col span={8}>
+          <Form initialValues={{ email: '', password: '' }} onFinish={onSubmit} name="login-form">
+            <Form.Item layout="vertical" label="Email" name="vertical" rules={[{ required: true }]}>
+              <Input type="email" placeholder="E-mail" />
+            </Form.Item>
+            <Form.Item
+              layout="vertical"
+              label="Пароль"
+              name="password"
+              rules={[{ required: true }]}
+            >
+              <Input variant="outlined" type="password" placeholder="Пароль" />
+            </Form.Item>
+            <Button>Назад</Button>
+            <Button variant="filled" style={{ backgroundColor: 'colorPrimary' }}>
+              Продолжить
+            </Button>
+            <hr className="mt-2 w-3/4 mx-auto" />
+            <Typography>
+              Нет аккаунта?
+              <NavLink to={'/' + authRoutes.signup}>Перейти</NavLink>
+            </Typography>
+          </Form>
+        </Col>
+
+        <Col span={8}>
+          <Image alt="login" preview={false} src={loginSvg} />
+        </Col>
+      </Row>
     </div>
   );
 }
