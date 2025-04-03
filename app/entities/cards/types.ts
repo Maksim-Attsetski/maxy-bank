@@ -1,6 +1,6 @@
 import type { TStatus } from 'app/shared';
 import { UserDto, type IUser } from '../users';
-import { BankAccountDto, type IBankAccount } from '../bank-accounts';
+import { type IBankAccount } from '../bank-accounts';
 
 export interface ICard {
   id: string;
@@ -63,18 +63,21 @@ export const CardDto: ICard = {
   limit: 0,
 };
 
+const date = new Date();
+date.setFullYear(date.getFullYear() + 4);
+
 export const UserCardDto: TFullUserCard = {
   id: '',
   uid: '',
   created_at: '',
   archived_at: null,
   blocked_at: null,
-  expire_at: null,
-  card_number: 0,
-  cvv: 0,
-  name: '',
+  expire_at: date.toLocaleDateString(),
+  card_number: 1111222233334444,
+  cvv: 123,
+  name: 'Карта 1',
   card_bg: 1,
-  pin: 0,
+  pin: 2123,
   bank_account_id: {
     author_id: '',
     card_id: '',
