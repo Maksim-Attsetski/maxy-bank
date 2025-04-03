@@ -1,10 +1,9 @@
 import { isRouteErrorResponse, Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 
-import MyApp from './App';
+import App from './App';
 import type { Route } from './+types/root';
 
 import './app.css';
-import { Suspense, type FC } from 'react';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -62,13 +61,5 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     </main>
   );
 }
-
-const App: FC = () => {
-  return (
-    <Suspense fallback={<p>Loading</p>}>
-      <MyApp />
-    </Suspense>
-  );
-};
 
 export default App;

@@ -1,13 +1,23 @@
 import { authRoutes } from 'app/shared';
-import { NavLink } from 'react-router';
 import type { Route } from './+types/home';
 
 import { supabase } from 'app/shared/utils';
 import type { IUser } from 'app/entities/users';
 
-import { Input, Button, Grid, Typography, Divider } from '@mui/material';
+import {
+  Button,
+  Typography,
+  Grid,
+  Divider,
+  TextField,
+  Link as MuiLink,
+  Input,
+} from '@mui/material';
 
 import loginSvg from 'app/assets/login.svg';
+import { Link } from 'react-router';
+import DatePicker from 'app/shared/ui/DatePicker';
+import { useForm } from 'react-hook-form';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -37,6 +47,8 @@ const defaultForm = {
 } as IForm;
 
 export default function Signup() {
+  const { control } = useForm();
+
   const onSubmit = async (values: IForm) => {
     try {
       console.log('submit');
@@ -70,51 +82,50 @@ export default function Signup() {
 
   return (
     <div className="layout">
-      <div className="container">
-        <br />
-        <h2>Регистрация</h2>
-        <br />
-        <Grid container>
-          {/* errors.email = isEmailValid(values.email);
-              errors.first_name = isNameValid(values.first_name);
-              errors.last_name = isNameValid(values.last_name); */}
-
-          {/* isExist<IForm | FormikErrors<IForm>>(
-                ['password', 'birthed_at', 'gender'],
-                values,
-                errors
-              ); */}
-          <form>
-            <Input type="email" name="email" placeholder="E-mail" />
-            <Input type="password" name="password" placeholder="Пароль" />
-            <Input name="first_name" placeholder="Имя" />
-            <Input name="last_name" placeholder="Фамилия" />
-            <Input name="middle_name" placeholder="Отчество" />
-            <Input type="date" name="birthed_at" placeholder="Дата рождения" />
-            {/* <Toggle
-              placeholder="Пол"
-              options={[
-                { label: 'Мужской', value: 'MALE' },
-                { label: 'Женский', value: 'FEMALE' },
-              ]}
-              name="gender"
-            /> */}
-            <Grid container>
-              <Button className="flex-1/4">Назад</Button>
-              <Button className="flex-1/2">Продолжить</Button>
+      <Typography variant="h2">Регистрация</Typography>
+      <br />
+      <Grid container spacing={2} justifyContent={'space-between'}>
+        {/* <Form initialValues={{ email: '', password: '' }} onFinish={onSubmit} name="login-form"> */}
+        <Grid size={6}>
+          <form name="login-form">
+            <Grid container flexDirection={'column'} gap={2}>
+              <TextField sx={{ width: '100%' }} type="email" placeholder="E-mail" />
+              <TextField sx={{ width: '100%' }} type="password" placeholder="Пароль" />
+              <TextField sx={{ width: '100%' }} placeholder="Имя" />
+              <TextField sx={{ width: '100%' }} placeholder="Фамилия" />
+              <TextField sx={{ width: '100%' }} placeholder="Отчество" />
+              <Input type="date" />
+              <DatePicker controller={{ name: 'birth_at', control }} label="Дата рождения" />
+              {/* <Input name="first_name" placeholder="Имя" />
+      <Input name="last_name" placeholder="Фамилия" />
+      <Input name="middle_name" placeholder="Отчество" />
+      <Input type="date" name="birthed_at" placeholder="Дата рождения" /> */}
+              <Grid container justifyContent={'space-between'}>
+                <Grid size={3}>
+                  <Button sx={{ width: '100%' }} LinkComponent={Link} to={'../'}>
+                    Назад
+                  </Button>
+                </Grid>
+                <Grid size={7}>
+                  <Button sx={{ width: '100%' }} variant="contained" type="submit">
+                    Продолжить
+                  </Button>
+                </Grid>
+              </Grid>
+              <Divider />
+              <Typography textAlign={'center'}>
+                Нет аккаунта?
+                <MuiLink component={Link} style={{ marginLeft: 3 }} to={'/' + authRoutes.signup}>
+                  Перейти
+                </MuiLink>
+              </Typography>
             </Grid>
-            <Divider />
-            <Typography>
-              Нет аккаунта?
-              <NavLink className="text-primary ml-0.5" to={'/' + authRoutes.signup}>
-                Перейти
-              </NavLink>
-            </Typography>
           </form>
-
-          <img className="w-1/2 sm:w-1/3" src={loginSvg} />
         </Grid>
-      </div>
+        <Grid size={4}>
+          <img alt="login" src={loginSvg} />
+        </Grid>
+      </Grid>
     </div>
   );
 }

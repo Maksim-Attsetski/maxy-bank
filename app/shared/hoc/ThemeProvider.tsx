@@ -8,6 +8,11 @@ import {
 } from '@mui/material';
 import { useMemo, type FC, type PropsWithChildren } from 'react';
 
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { ru } from 'date-fns/locale';
+import { ruRU } from '@mui/x-date-pickers/locales';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+
 import { useTheme } from '../hooks';
 
 const getPalette = (theme: 'light' | 'dark'): PaletteOptions =>
@@ -40,6 +45,10 @@ const getPalette = (theme: 'light' | 'dark'): PaletteOptions =>
 const componentsTheme: Components<Omit<Theme, 'components' | 'palette'> & CssVarsTheme> = {
   MuiCard: { styleOverrides: { root: { borderRadius: 8, padding: '12px' } } },
   MuiTypography: { defaultProps: { color: 'text.primary' } },
+  MuiInputBase: { styleOverrides: { root: { borderRadius: 8 }, input: { padding: '12px 14px' } } },
+  MuiOutlinedInput: {
+    styleOverrides: { root: { borderRadius: 8 }, input: { padding: '12px 14px' } },
+  },
 };
 
 const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -47,14 +56,27 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const themeData = useMemo(
     () =>
-      createTheme({
-        palette: getPalette(theme),
-        components: componentsTheme,
-      }),
+      createTheme(
+        {
+          palette: getPalette(theme),
+          components: componentsTheme,
+        },
+        ruRU
+      ),
     [theme]
   );
 
-  return <MaterialProvider theme={themeData}>{children}</MaterialProvider>;
+  return (
+    <MaterialProvider theme={themeData}>
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        adapterLocale={ru}
+        localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
+      >
+        {children}
+      </LocalizationProvider>
+    </MaterialProvider>
+  );
 };
 
 export default ThemeProvider;

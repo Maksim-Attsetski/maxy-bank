@@ -3,9 +3,9 @@ import type { Route } from './+types/home';
 import { supabase } from 'app/shared/utils';
 
 import loginSvg from 'app/assets/login.svg';
-import { NavLink } from 'react-router';
+import { Link } from 'react-router';
 
-import { Input, Button, Typography, Grid } from '@mui/material';
+import { Button, Typography, Grid, Divider, TextField, Link as MuiLink } from '@mui/material';
 import { useUsers } from 'app/entities/users';
 
 export function meta({}: Route.MetaArgs) {
@@ -58,21 +58,38 @@ export default function Login() {
     <div className="layout">
       <Typography variant="h2">Авторизация</Typography>
       <br />
-      <Grid container justifyContent={'space-between'}>
+      <Grid container spacing={2} justifyContent={'space-between'}>
         {/* <Form initialValues={{ email: '', password: '' }} onFinish={onSubmit} name="login-form"> */}
-        <form name="login-form">
-          <Input type="email" placeholder="E-mail" />
-          <Input type="password" placeholder="Пароль" />
-          <Button>Назад</Button>
-          <Button style={{ backgroundColor: 'colorPrimary' }}>Продолжить</Button>
-          <hr className="mt-2 w-3/4 mx-auto" />
-          <Typography>
-            Нет аккаунта?
-            <NavLink to={'/' + authRoutes.signup}>Перейти</NavLink>
-          </Typography>
-        </form>
-
-        <img alt="login" src={loginSvg} />
+        <Grid size={6}>
+          <form name="login-form">
+            <Grid container flexDirection={'column'} gap={2}>
+              <TextField sx={{ width: '100%' }} type="email" placeholder="E-mail" />
+              <TextField sx={{ width: '100%' }} type="password" placeholder="Пароль" />
+              <Grid container justifyContent={'space-between'}>
+                <Grid size={3}>
+                  <Button sx={{ width: '100%' }} LinkComponent={Link} to={'../'}>
+                    Назад
+                  </Button>
+                </Grid>
+                <Grid size={7}>
+                  <Button sx={{ width: '100%' }} variant="contained" type="submit">
+                    Продолжить
+                  </Button>
+                </Grid>
+              </Grid>
+              <Divider />
+              <Typography textAlign={'center'}>
+                Нет аккаунта?
+                <MuiLink component={Link} style={{ marginLeft: 3 }} to={'/' + authRoutes.signup}>
+                  Перейти
+                </MuiLink>
+              </Typography>
+            </Grid>
+          </form>
+        </Grid>
+        <Grid size={4}>
+          <img alt="login" src={loginSvg} />
+        </Grid>
       </Grid>
     </div>
   );
