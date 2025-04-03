@@ -1,4 +1,4 @@
-import { authRoutes } from 'app/shared';
+import { authRoutes, BackButton } from 'app/shared';
 import type { Route } from './+types/home';
 
 import { supabase } from 'app/shared/utils';
@@ -102,9 +102,7 @@ export default function Signup() {
       <Input type="date" name="birthed_at" placeholder="Дата рождения" /> */}
               <Grid container justifyContent={'space-between'}>
                 <Grid size={3}>
-                  <Button sx={{ width: '100%' }} LinkComponent={Link} to={'../'}>
-                    Назад
-                  </Button>
+                  <BackButton sx={{ width: '100%' }} />
                 </Grid>
                 <Grid size={7}>
                   <Button sx={{ width: '100%' }} variant="contained" type="submit">

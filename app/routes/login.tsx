@@ -1,4 +1,4 @@
-import { authRoutes, Input, supabase } from 'app/shared';
+import { authRoutes, BackButton, Input, supabase } from 'app/shared';
 import type { Route } from './+types/home';
 import { Link, useNavigate } from 'react-router';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -50,7 +50,7 @@ export default function Login() {
 
       if (res?.data?.user) {
         await onGetUser(res.data?.user?.id);
-        navigate(-1);
+        navigate('/');
       }
     } catch (error) {
       console.log(error);
@@ -69,9 +69,7 @@ export default function Login() {
               <Input label="Пароль" name="password" control={control} />
               <Grid container justifyContent={'space-between'}>
                 <Grid size={3}>
-                  <Button sx={{ width: '100%' }} onClick={() => navigate('../')}>
-                    Назад
-                  </Button>
+                  <BackButton sx={{ width: '100%' }} />
                 </Grid>
                 <Grid size={7}>
                   <Button sx={{ width: '100%' }} variant="contained" type="submit">

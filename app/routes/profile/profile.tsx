@@ -1,8 +1,8 @@
-import { Link, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import type { Route } from '../+types/home';
 import { useUserDocuments, useUsers } from 'app/entities/users';
 import { useEffect, useMemo } from 'react';
-import { encode, supabase } from 'app/shared';
+import { BackButton, encode, supabase } from 'app/shared';
 import { ProfileUserInfo } from 'app/widgets';
 import { Button, Card, Input, Typography } from '@mui/material';
 
@@ -81,9 +81,7 @@ export default function Profile() {
 
   return (
     <div className="container">
-      <Button LinkComponent={Link} to={'../'}>
-        Назад
-      </Button>
+      <BackButton />
       <br />
       <br />
       <ProfileUserInfo />

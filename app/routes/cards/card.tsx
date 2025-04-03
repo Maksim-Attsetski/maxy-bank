@@ -4,7 +4,7 @@ import {
   useUserCards,
   type TFullUserCard,
 } from 'app/entities/cards';
-import { cardsImagesUrl, CardUtils, routes } from 'app/shared';
+import { BackButton, cardsImagesUrl, CardUtils, routes } from 'app/shared';
 import { useState, useEffect } from 'react';
 import type { Route } from '../+types/home';
 import { Link, useParams } from 'react-router';
@@ -86,7 +86,7 @@ export default function CardItem() {
           />
         </>
       )}
-      <Link to={'../'}>Назад</Link>
+      <BackButton />
       <br />
       <br />
       {cardItem ? (

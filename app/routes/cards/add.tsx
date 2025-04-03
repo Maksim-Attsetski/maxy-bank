@@ -7,7 +7,7 @@ import type { Route } from './+types/add';
 import { useAuth } from 'app/entities/auth';
 import { AuthModal } from 'app/shared/modals';
 import { Button, Card, Input, Modal } from '@mui/material';
-import { Link } from 'react-router';
+import { BackButton } from 'app/shared';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -53,7 +53,7 @@ export default function AddNewCard() {
           <Button onClick={onMakeNewRequest}>Отправить</Button>
         </>
       </Modal>
-      <Link to={'../'}>Назад</Link>
+      <BackButton />
       <br />
       <br />
       <h3>Выберите карту для оформления</h3>

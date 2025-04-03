@@ -1,9 +1,8 @@
 import { BankCard, useCards, useCardsRequests, UserCard, useUserCards } from 'app/entities/cards';
-import { Appear, CardApply, Empty } from 'app/shared';
+import { Appear, BackButton, CardApply, Empty } from 'app/shared';
 
 import type { Route } from '../+types/home';
-import { Button, Card, Grid, Typography } from '@mui/material';
-import { Link } from 'react-router';
+import { Card, Grid, Typography } from '@mui/material';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -19,9 +18,7 @@ export default function Cards() {
 
   return (
     <div className="container">
-      <Button LinkComponent={Link} to={-1}>
-        Назад
-      </Button>
+      <BackButton />
       {cardsRequests.length > 0 && (
         <>
           <Appear>

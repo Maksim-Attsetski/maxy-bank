@@ -1,4 +1,4 @@
-import { routes } from 'app/shared';
+import { BackButton, routes } from 'app/shared';
 import type { Route } from '../+types/home';
 import { useUsers } from 'app/entities/users';
 import { useNavigate } from 'react-router';
@@ -16,7 +16,7 @@ export default function PrivateCabinet() {
   const { user } = useUsers();
   return (
     <div className="container">
-      <Button onClick={() => navigate(-1)}>Назад</Button>
+      <BackButton />
       <br />
       <Button onClick={() => navigate(`/${routes.profile}/${user?.uid}`)}>
         Перейти в личный кабинет

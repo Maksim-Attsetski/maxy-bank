@@ -13,8 +13,10 @@ import PhoneNumberField from './PhoneNumberField';
 import Skeleton from './Skeleton';
 import Toggle from './Toggle';
 import SuccessMark from './SuccessMark';
+import BackButton from './BackButton';
 
 export {
+  BackButton,
   SuccessMark,
   Skeleton,
   Toggle,
