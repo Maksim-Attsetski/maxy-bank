@@ -1,5 +1,6 @@
 import { useMemo, type FC } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
+import { Button, Grid, Typography } from '@mui/material';
 
 import { FaRegUser } from 'react-icons/fa';
 
@@ -8,7 +9,8 @@ import { authRoutes, routes } from '../const';
 import { useAuth } from 'app/entities/auth';
 import { useUsers } from 'app/entities/users';
 import { useTheme } from '../hooks';
-import { Button, Grid, Typography } from '@mui/material';
+
+import logo from 'app/assets/logo.png';
 
 const headerLinks = [
   { label: 'Карты', to: routes.cards },
@@ -33,7 +35,9 @@ const Header: FC = () => {
     <header style={{ padding: '12px 20px' }}>
       <Grid container justifyContent={'space-between'}>
         <Typography color="primary" variant="h5">
-          <Link to={'/'}>Maxy Bank</Link>
+          <Link to={'/'}>
+            <img src={logo} alt="logo" height={50} />
+          </Link>
         </Typography>
         <Grid container alignItems={'center'} gap={2}>
           {headerLinks.map((link) => (

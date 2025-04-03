@@ -3,7 +3,6 @@ import { BecomeClient, Faq } from 'app/widgets';
 
 import type { Route } from './+types/home';
 import { Grid, Typography } from '@mui/material';
-import { UserCard, UserCardDto } from 'app/entities/cards';
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: 'Maxy Bank' }, { name: 'description', content: 'Добро пожаловать в Maxy Bank' }];
@@ -23,10 +22,7 @@ export default function Home() {
       <br />
       <BecomeClient />
       <br />
-      <UserCard card={UserCardDto} />
-      <div>
-        <Typography variant="h4">Лучшие предложения для тебя</Typography>
-      </div>
+      <Typography variant="h4">Лучшие предложения для тебя</Typography>
       <br />
       <Faq />
     </div>

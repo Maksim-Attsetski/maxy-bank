@@ -2,7 +2,8 @@ import { BankCard, useCards, useCardsRequests, UserCard, useUserCards } from 'ap
 import { Appear, CardApply, Empty } from 'app/shared';
 
 import type { Route } from '../+types/home';
-import { Card, Grid, Typography } from '@mui/material';
+import { Button, Card, Grid, Typography } from '@mui/material';
+import { Link } from 'react-router';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -18,6 +19,9 @@ export default function Cards() {
 
   return (
     <div className="container">
+      <Button LinkComponent={Link} to={-1}>
+        Назад
+      </Button>
       {cardsRequests.length > 0 && (
         <>
           <Appear>
@@ -48,10 +52,10 @@ export default function Cards() {
       {userCards.length > 0 ? (
         <>
           <Appear>
-            <h3>Ваши карты</h3>
+            <Typography variant="h4">Ваши карты</Typography>
           </Appear>
           <br />
-          <Grid gap={3}>
+          <Grid container gap={3}>
             {userCards.map((card) => (
               <UserCard card={card} key={card.name} />
             ))}
@@ -65,15 +69,15 @@ export default function Cards() {
       )}
       <br />
       <Appear>
-        <h3>Карты нашего банка</h3>
+        <Typography variant="h4">Карты нашего банка</Typography>
       </Appear>
 
       <br />
-      <Grid flexWrap={'wrap'} gap={3}>
+      <Grid flexWrap={'wrap'} container gap={3}>
         {cards.map((card) => (
-          <div key={card.name} className="flex-1/3">
+          <Grid key={card.name} columns={{ xs: 1, sm: 2, md: 3 }}>
             <BankCard card={card} />
-          </div>
+          </Grid>
         ))}
       </Grid>
     </div>
