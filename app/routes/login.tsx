@@ -1,12 +1,15 @@
-import { authRoutes } from 'app/shared';
+import { authRoutes, Input, supabase } from 'app/shared';
 import type { Route } from './+types/home';
-import { supabase } from 'app/shared/utils';
+import { Link, useNavigate } from 'react-router';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import loginSvg from 'app/assets/login.svg';
-import { Link } from 'react-router';
 
-import { Button, Typography, Grid, Divider, TextField, Link as MuiLink } from '@mui/material';
+import { Button, Typography, Grid, Divider, Link as MuiLink } from '@mui/material';
 import { useUsers } from 'app/entities/users';
+import { useForm } from 'react-hook-form';
+import { loginSchema, type TLoginForm } from 'app/entities/auth';
+import type { SyntheticEvent } from 'react';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -20,25 +23,24 @@ interface IForm {
   password: string;
 }
 
-// const validateForm = (values: IForm): FormikErrors<IForm> => {
-//   const errors: IForm = { email: '', password: '' };
-//   if (!values.email) {
-//     errors.email = 'Обязательно к заполнению';
-//   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-//     errors.email = 'Введите валидный адрес';
-//   }
-
-//   if (!values.password) {
-//     errors.password = 'Обязательно к заполнению';
-//   }
-//   return errors;
-// };
-
 export default function Login() {
   const { onGetUser } = useUsers();
-  const onSubmit = async (values: IForm) => {
+  const navigate = useNavigate();
+
+  const { control, getValues, trigger } = useForm<TLoginForm>({
+    mode: 'all',
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
     try {
-      console.log('submit');
+      const isFormValid = await trigger();
+
+      if (!isFormValid) return;
+
+      console.log('submit', isFormValid);
+      const values = getValues();
       const res = await supabase.auth.signInWithPassword(values);
       console.log('res', res);
 
@@ -48,6 +50,7 @@ export default function Login() {
 
       if (res?.data?.user) {
         await onGetUser(res.data?.user?.id);
+        navigate(-1);
       }
     } catch (error) {
       console.log(error);
@@ -59,15 +62,14 @@ export default function Login() {
       <Typography variant="h2">Авторизация</Typography>
       <br />
       <Grid container spacing={2} justifyContent={'space-between'}>
-        {/* <Form initialValues={{ email: '', password: '' }} onFinish={onSubmit} name="login-form"> */}
         <Grid size={6}>
-          <form name="login-form">
+          <form onSubmit={onSubmit}>
             <Grid container flexDirection={'column'} gap={2}>
-              <TextField sx={{ width: '100%' }} type="email" placeholder="E-mail" />
-              <TextField sx={{ width: '100%' }} type="password" placeholder="Пароль" />
+              <Input label="Email" name="email" control={control} />
+              <Input label="Пароль" name="password" control={control} />
               <Grid container justifyContent={'space-between'}>
                 <Grid size={3}>
-                  <Button sx={{ width: '100%' }} LinkComponent={Link} to={'../'}>
+                  <Button sx={{ width: '100%' }} onClick={() => navigate('../')}>
                     Назад
                   </Button>
                 </Grid>

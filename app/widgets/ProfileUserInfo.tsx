@@ -2,7 +2,7 @@ import { type FC } from 'react';
 
 import { useUsers } from 'app/entities/users';
 import { avatarsImagesUrl } from 'app/shared';
-import { Card } from '@mui/material';
+import { Card, Typography } from '@mui/material';
 
 const ProfileUserInfo: FC = () => {
   const { user } = useUsers();
@@ -10,18 +10,24 @@ const ProfileUserInfo: FC = () => {
   return (
     <Card>
       {user?.avatar && (
-        <img
-          src={avatarsImagesUrl + user?.avatar}
-          alt="Avatar"
-          className="w-28 h-28 rounded-full mx-auto mb-2"
-        />
+        <Typography textAlign={'center'}>
+          <img
+            src={avatarsImagesUrl + user?.avatar}
+            alt="Avatar"
+            width={130}
+            height={130}
+            style={{ borderRadius: '50%' }}
+          />
+        </Typography>
       )}
-      <h2 className="text-center">
+      <Typography textAlign={'center'} variant="h3">
         {user?.last_name} {user?.first_name}
-      </h2>
+      </Typography>
       <br />
-      <p>{user?.email}</p>
-      <p>{user?.birthed_at && new Date(user?.birthed_at).toLocaleDateString()}</p>
+      <Typography variant="h6">Email: {user?.email}</Typography>
+      <Typography variant="h6">
+        Дата рождения: {user?.birthed_at && new Date(user?.birthed_at).toLocaleDateString()}
+      </Typography>
     </Card>
   );
 };

@@ -53,8 +53,9 @@ const Header: FC = () => {
                   {user?.first_name}
                 </Typography>
                 <Button>
-                  <Link to={routes.profile}></Link>
-                  <FaRegUser />
+                  <Link to={routes.profile}>
+                    <FaRegUser />
+                  </Link>
                 </Button>
               </Grid>
               <Button onClick={onLogout}>Выйти</Button>

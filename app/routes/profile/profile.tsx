@@ -4,7 +4,7 @@ import { useUserDocuments, useUsers } from 'app/entities/users';
 import { useEffect, useMemo } from 'react';
 import { encode, supabase } from 'app/shared';
 import { ProfileUserInfo } from 'app/widgets';
-import { Button, Card, Input } from '@mui/material';
+import { Button, Card, Input, Typography } from '@mui/material';
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -38,12 +38,12 @@ const document = {
 type TDocument = typeof document;
 
 export default function Profile() {
-  const paramsId = useParams()?.uid;
+  const paramsId = useParams()?.uid as string | undefined;
 
   const { user } = useUsers();
   const { userDocument, onGetUserDoc } = useUserDocuments();
 
-  const isAuthor = useMemo(() => user?.uid === paramsId, [user?.uid, paramsId]);
+  const isAuthor = useMemo(() => (paramsId ? user?.uid === paramsId : true), [user?.uid, paramsId]);
 
   useEffect(() => {
     onGetUserDoc();
@@ -81,26 +81,28 @@ export default function Profile() {
 
   return (
     <div className="container">
-      <Link to={'../'}>Назад</Link>
+      <Button LinkComponent={Link} to={'../'}>
+        Назад
+      </Button>
       <br />
       <br />
       <ProfileUserInfo />
-      <div className="py-3" />
+      <br />
       {isAuthor &&
         (userDocument ? (
           <div>
             <Card>
-              <p>№ {userDocument.identification_number}</p>
-              <p>Номер {userDocument.passport_number}</p>
-              <p>С {userDocument.issued_at}</p>
-              <p>До {userDocument.expire_at}</p>
-              <p>Выдан: {userDocument.issued_by}</p>
+              <Typography>№ {userDocument.identification_number}</Typography>
+              <Typography>Номер {userDocument.passport_number}</Typography>
+              <Typography>С {userDocument.issued_at}</Typography>
+              <Typography>До {userDocument.expire_at}</Typography>
+              <Typography>Выдан: {userDocument.issued_by}</Typography>
             </Card>
-            <div className="py-3" />
+            <br />
             <Card>
-              <p>Адрес</p>
+              <Typography>Адрес</Typography>
               {Object.values(userDocument.address_live).map((item, inx) => (
-                <p key={inx}>{item}</p>
+                <Typography key={inx}>{item}</Typography>
               ))}
             </Card>
             <br />
